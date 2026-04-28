@@ -29,10 +29,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: min(210mm, 100%);
-  min-height: 297mm;
+  width: min(calc(var(--ebook-page-width-mm, 210) * 1mm), 100%);
+  min-height: calc(var(--ebook-page-height-mm, 297) * 1mm);
   padding: var(--ebook-spacing-page-padding);
-  background: var(--ebook-bg);
+  background: var(--ebook-bg, #fff);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
   text-align: center;
 }
@@ -191,11 +191,11 @@
 .ebook-section {
   display: flex;
   flex-direction: column;
-  width: min(210mm, 100%);
-  min-height: 297mm;
-  /* 20mm matches @page margin so browser content area = PDF content area (170mm × 257mm) */
+  width: min(calc(var(--ebook-page-width-mm, 210) * 1mm), 100%);
+  min-height: calc(var(--ebook-page-height-mm, 297) * 1mm);
+  /* 20mm matches @page margin so browser content area = PDF content area */
   padding: 20mm;
-  background: var(--ebook-bg);
+  background: var(--ebook-bg, #fff);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
 }
 
@@ -376,8 +376,8 @@
 
 .ebook-cover {
   display: flex;
-  width: min(210mm, 100%);
-  min-height: 297mm;
+  width: min(calc(var(--ebook-page-width-mm, 210) * 1mm), 100%);
+  min-height: calc(var(--ebook-page-height-mm, 297) * 1mm);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
 }
 
@@ -432,11 +432,11 @@
 .ebook-page {
   display: flex;
   flex-direction: column;
-  width: min(210mm, 100%);
-  min-height: 297mm;
+  width: min(calc(var(--ebook-page-width-mm, 210) * 1mm), 100%);
+  min-height: calc(var(--ebook-page-height-mm, 297) * 1mm);
   /* 20mm matches @page margin */
   padding: 20mm;
-  background: var(--ebook-bg);
+  background: var(--ebook-bg, #fff);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
 }
 
@@ -446,8 +446,8 @@
   position: relative;
   display: flex;
   align-items: center;
-  width: min(210mm, 100%);
-  min-height: 297mm;
+  width: min(calc(var(--ebook-page-width-mm, 210) * 1mm), 100%);
+  min-height: calc(var(--ebook-page-height-mm, 297) * 1mm);
   padding: var(--ebook-spacing-page-padding);
   gap: 2rem;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
@@ -513,7 +513,7 @@
    =========================== */
 
 @page {
-  size: A4 portrait;
+  size: auto portrait;
   margin: 20mm;
   @bottom-center {
     content: counter(page);

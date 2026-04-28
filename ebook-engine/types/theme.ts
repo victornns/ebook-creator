@@ -1,9 +1,19 @@
+export type PredefinedPageSize = "A2" | "A3" | "A4" | "A5" | "Letter" | "Legal" | "Tabloid";
+
+/** Custom page size in millimeters. */
+export interface CustomPageSize {
+  width: number;
+  height: number;
+}
+
+/** Paper size used in the preview and for PDF export. Defaults to A4 if omitted. */
+export type PageSize = PredefinedPageSize | CustomPageSize;
+
 export interface EbookTheme {
   colors: {
     primary: string;
     secondary: string;
     text: string;
-    background: string;
     accent: string;
     muted: string;
   };
@@ -24,4 +34,6 @@ export interface EbookTheme {
     blockGap: string;
     pagePadding: string;
   };
+  /** Paper size for preview and PDF export. Defaults to A4. */
+  pageSize?: PageSize;
 }

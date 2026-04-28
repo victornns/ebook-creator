@@ -5,7 +5,6 @@ export const theme: EbookTheme = {
     primary: "#1a3a2a",
     secondary: "#2d5a3d",
     text: "#1c2a1e",
-    background: "#fafaf8",
     accent: "#4a9e6b",
     muted: "#7a8c7d",
   },
@@ -20,4 +19,5 @@ export const theme: EbookTheme = {
     blockGap: "1.5rem",
     pagePadding: "3rem",
   },
+  pageSize: "A4",
 };
