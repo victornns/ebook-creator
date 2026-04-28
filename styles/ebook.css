@@ -265,11 +265,11 @@
   margin: 0 0 0.8rem;
 }
 
-.ebook-ingredients {
+.ebook-item-list {
   margin: var(--ebook-spacing-block-gap) 0;
 }
 
-.ebook-ingredients-list {
+.ebook-item-list-items {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -278,7 +278,7 @@
   gap: 0 1.5rem;
 }
 
-.ebook-ingredients-list li {
+.ebook-item-list-items li {
   font-size: 0.88rem;
   line-height: 1.5;
   padding: 0.35rem 0;
@@ -288,7 +288,7 @@
   gap: 0.55rem;
 }
 
-.ebook-ingredients-list li::before {
+.ebook-item-list-items li::before {
   content: "";
   width: 5px;
   height: 5px;

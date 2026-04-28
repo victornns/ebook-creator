@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "E-book Creator",
-  description: "Sistema para criação de e-books profissionais em React",
+  description: "React-Based System for Creating Professional E-books",
 };
 
 export default function RootLayout({

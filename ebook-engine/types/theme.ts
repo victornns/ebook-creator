@@ -11,6 +11,13 @@ export interface EbookTheme {
     heading: string;
     body: string;
     mono?: string;
+    /**
+     * Google Font family names to load automatically.
+     * Use the exact name as shown on fonts.google.com.
+     * Weights 300–700 (regular + italic) are loaded by default.
+     * Example: ["Playfair Display", "Inter"]
+     */
+    googleFonts?: string[];
   };
   spacing: {
     sectionGap: string;

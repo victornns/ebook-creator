@@ -1,6 +1,6 @@
 import type { StaticImageData } from "next/image";
 
-export type BlockType = "heading" | "paragraph" | "image" | "quote" | "list" | "divider" | "callout" | "code" | "ingredients" | "steps";
+export type BlockType = "heading" | "paragraph" | "image" | "quote" | "list" | "divider" | "callout" | "code" | "item-list" | "steps";
 
 export interface Block {
   type: BlockType;
@@ -9,7 +9,7 @@ export interface Block {
   src?: string;
   alt?: string;
   level?: 1 | 2 | 3;
-  /** Optional label override for `ingredients` and `steps` blocks. */
+  /** Optional label for `item-list` and `steps` blocks. */
   label?: string;
 }
 

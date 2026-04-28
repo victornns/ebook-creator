@@ -2,11 +2,11 @@ import { chromium } from "playwright";
 import path from "path";
 import fs from "fs";
 
-async function generatePDF(ebookId: string): Promise<void> {
+async function generatePDF(ebookId: string, baseUrl: string): Promise<void> {
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
-  const url = `http://localhost:3000/preview/${ebookId}`;
+  const url = `${baseUrl}/preview/${ebookId}`;
   console.log(`Abrindo: ${url}`);
   await page.goto(url, { waitUntil: "networkidle" });
 
@@ -33,7 +33,8 @@ async function generatePDF(ebookId: string): Promise<void> {
 }
 
 const ebookId = process.argv[2];
-generatePDF(ebookId).catch((err) => {
+const baseUrl = process.argv[3] ?? "http://localhost:3000";
+generatePDF(ebookId, baseUrl).catch((err) => {
   console.error("❌ Erro ao gerar PDF:", err);
   process.exit(1);
 });

@@ -93,7 +93,33 @@ function usePageMap(rootRef: React.RefObject<HTMLDivElement | null>, mmRef: Reac
   return pageMap;
 }
 
+function useGoogleFonts(families: string[] | undefined) {
+  useEffect(() => {
+    if (!families?.length) return;
+    const params = families.map((f) => `family=${f.replace(/ /g, "+")}:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400`).join("&");
+    const href = `https://fonts.googleapis.com/css2?${params}&display=swap`;
+    const preconnect = document.createElement("link");
+    preconnect.rel = "preconnect";
+    preconnect.href = "https://fonts.googleapis.com";
+    const preconnectOrigin = document.createElement("link");
+    preconnectOrigin.rel = "preconnect";
+    preconnectOrigin.href = "https://fonts.gstatic.com";
+    preconnectOrigin.crossOrigin = "anonymous";
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    document.head.append(preconnect, preconnectOrigin, link);
+    return () => {
+      preconnect.remove();
+      preconnectOrigin.remove();
+      link.remove();
+    };
+  }, [families]);
+}
+
 export default function EbookRenderer({ ebook, theme }: Props) {
+  useGoogleFonts(theme.fonts.googleFonts);
+
   const cssVars = {
     "--ebook-primary": theme.colors.primary,
     "--ebook-secondary": theme.colors.secondary,

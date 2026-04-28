@@ -44,11 +44,11 @@ export default function Block({ block }: Props) {
           <code>{block.content}</code>
         </pre>
       );
-    case "ingredients":
+    case "item-list":
       return (
-        <div className="ebook-ingredients">
-          <p className="ebook-recipe-label">{block.label ?? "Ingredientes"}</p>
-          <ul className="ebook-ingredients-list">
+        <div className="ebook-item-list">
+          {block.label && <p className="ebook-recipe-label">{block.label}</p>}
+          <ul className="ebook-item-list-items">
             {block.items?.map((item, i) => (
               <li key={i}>{item}</li>
             ))}
@@ -58,7 +58,7 @@ export default function Block({ block }: Props) {
     case "steps":
       return (
         <div className="ebook-steps">
-          <p className="ebook-recipe-label">{block.label ?? "Modo de preparo"}</p>
+          <p className="ebook-recipe-label">{block.label ?? "Steps"}</p>
           <ol className="ebook-steps-list">
             {block.items?.map((item, i) => (
               <li key={i}>{item}</li>
