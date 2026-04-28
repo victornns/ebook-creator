@@ -1,0 +1,607 @@
+/* ===========================
+   E-book Base Styles
+   =========================== */
+
+.ebook-root {
+  background-color: #d4d4d4;
+  color: var(--ebook-text);
+  font-family: var(--ebook-font-body);
+  line-height: 1.7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8mm;
+  padding: 12mm;
+  min-height: 100vh;
+}
+
+/* transparent wrapper so sections become direct flex children of ebook-root */
+.ebook-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8mm;
+}
+
+/* ----- Header ----- */
+
+.ebook-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: min(210mm, 100%);
+  min-height: 297mm;
+  padding: var(--ebook-spacing-page-padding);
+  background: var(--ebook-bg);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+  text-align: center;
+}
+
+.ebook-title {
+  font-family: var(--ebook-font-heading);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--ebook-primary);
+  margin: 0 0 0.5rem;
+  line-height: 1.2;
+}
+
+.ebook-subtitle {
+  font-size: 1.2rem;
+  color: var(--ebook-muted);
+  margin: 0 0 0.5rem;
+}
+
+.ebook-author {
+  font-size: 1rem;
+  color: var(--ebook-muted);
+  margin: 0;
+}
+
+/* ----- Table of Contents ----- */
+
+.ebook-toc {
+  padding: 2rem 0;
+  margin-bottom: var(--ebook-spacing-section-gap);
+}
+
+.ebook-toc-title {
+  font-family: var(--ebook-font-heading);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--ebook-accent);
+  margin: 0 0 2rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--ebook-primary) 18%, transparent);
+}
+
+.ebook-toc-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Chapter group in TOC */
+
+.ebook-toc-chapter-group {
+  margin-top: 0;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--ebook-primary) 10%, transparent);
+}
+
+.ebook-toc-chapter-group:first-child {
+  padding-top: 0;
+}
+
+.ebook-toc-chapter-group:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.ebook-toc-chapter-link {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--ebook-primary);
+}
+
+.ebook-toc-chapter-link:hover .ebook-toc-chapter-title {
+  color: var(--ebook-accent);
+}
+
+.ebook-toc-chapter-number {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ebook-accent);
+}
+
+.ebook-toc-chapter-title {
+  flex: 1;
+  font-family: var(--ebook-font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ebook-primary);
+}
+
+.ebook-toc-page-num {
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: color-mix(in srgb, var(--ebook-text) 40%, transparent);
+}
+
+/* Sub-items inside a chapter */
+
+.ebook-toc-items {
+  margin: 0.7rem 0 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ebook-toc-item {
+  margin: 0.3rem 0;
+}
+
+.ebook-toc-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  color: var(--ebook-text);
+  text-decoration: none;
+  font-size: 0.85rem;
+  opacity: 0.55;
+}
+
+.ebook-toc-link:hover {
+  color: var(--ebook-accent);
+  opacity: 1;
+}
+
+/* ----- Page numbers ----- */
+
+.ebook-page-number {
+  margin-top: auto;
+  padding-top: 2.5rem;
+  text-align: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: color-mix(in srgb, var(--ebook-text) 35%, transparent);
+}
+
+.ebook-chapter-cover-page-number {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 0;
+  right: 0;
+  margin-top: 0;
+  padding-top: 0;
+  color: color-mix(in srgb, currentColor 50%, transparent);
+}
+
+/* ----- Sections ----- */
+
+.ebook-section {
+  display: flex;
+  flex-direction: column;
+  width: min(210mm, 100%);
+  min-height: 297mm;
+  /* 20mm matches @page margin so browser content area = PDF content area (170mm × 257mm) */
+  padding: 20mm;
+  background: var(--ebook-bg);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+}
+
+.ebook-section > *:first-child {
+  margin-top: 0;
+}
+
+/* ----- Blocks ----- */
+
+.ebook-heading {
+  font-family: var(--ebook-font-heading);
+  color: var(--ebook-primary);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.ebook-heading-1 {
+  font-size: 2rem;
+  font-weight: 700;
+  border-bottom: 1px solid color-mix(in srgb, var(--ebook-primary) 20%, transparent);
+  padding-bottom: 0.4rem;
+}
+
+.ebook-heading-2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.ebook-heading-3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--ebook-secondary);
+}
+
+.ebook-paragraph {
+  margin: 0 0 var(--ebook-spacing-block-gap);
+  font-size: 1rem;
+}
+
+.ebook-quote {
+  border-left: 4px solid var(--ebook-accent);
+  padding: 1rem 1.5rem;
+  margin: var(--ebook-spacing-block-gap) 0;
+  background-color: color-mix(in srgb, var(--ebook-accent) 5%, transparent);
+  font-style: italic;
+  color: var(--ebook-secondary);
+}
+
+.ebook-list {
+  padding-left: 1.5rem;
+  margin: 0 0 var(--ebook-spacing-block-gap);
+}
+
+.ebook-list li {
+  margin: 0.4rem 0;
+}
+
+/* ----- Recipe blocks ----- */
+
+.ebook-recipe-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--ebook-accent);
+  margin: 0 0 0.8rem;
+}
+
+.ebook-ingredients {
+  margin: var(--ebook-spacing-block-gap) 0;
+}
+
+.ebook-ingredients-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 1.5rem;
+}
+
+.ebook-ingredients-list li {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--ebook-text) 8%, transparent);
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.ebook-ingredients-list li::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--ebook-accent);
+  flex-shrink: 0;
+}
+
+.ebook-steps {
+  margin: var(--ebook-spacing-block-gap) 0;
+}
+
+.ebook-steps-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step-counter;
+}
+
+.ebook-steps-list li {
+  counter-increment: step-counter;
+  display: flex;
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--ebook-text) 8%, transparent);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.ebook-steps-list li:last-child {
+  border-bottom: none;
+}
+
+.ebook-steps-list li::before {
+  content: counter(step-counter);
+  font-family: var(--ebook-font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ebook-accent);
+  opacity: 0.35;
+  line-height: 1.1;
+  min-width: 1.5rem;
+  flex-shrink: 0;
+}
+
+.ebook-divider {
+  border: none;
+  border-top: 1px solid color-mix(in srgb, var(--ebook-text) 20%, transparent);
+  margin: var(--ebook-spacing-section-gap) 0;
+}
+
+.ebook-callout {
+  background-color: color-mix(in srgb, var(--ebook-accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ebook-accent) 30%, transparent);
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  margin: var(--ebook-spacing-block-gap) 0;
+  font-size: 0.95rem;
+}
+
+.ebook-code {
+  background-color: color-mix(in srgb, var(--ebook-primary) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ebook-primary) 15%, transparent);
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  margin: var(--ebook-spacing-block-gap) 0;
+  font-family: var(--ebook-font-mono);
+  font-size: 0.875rem;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.ebook-figure {
+  margin: var(--ebook-spacing-block-gap) 0;
+  text-align: center;
+}
+
+.ebook-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.25rem;
+}
+
+/* ----- Cover ----- */
+
+.ebook-cover {
+  display: flex;
+  width: min(210mm, 100%);
+  min-height: 297mm;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+}
+
+.ebook-cover-image-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.ebook-cover-image {
+  max-width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+}
+
+.ebook-cover-info-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 3rem 3rem 2rem;
+}
+
+.ebook-cover-title {
+  font-family: var(--ebook-font-heading);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: inherit;
+  margin: 0 0 1rem;
+  line-height: 1.2;
+}
+
+.ebook-cover-subtitle {
+  font-size: 1.2rem;
+  color: inherit;
+  opacity: 0.8;
+  margin: 0 0 2rem;
+  line-height: 1.4;
+}
+
+.ebook-cover-author {
+  font-size: 1rem;
+  color: inherit;
+  opacity: 0.6;
+  margin: 0;
+}
+
+/* ----- TOC Page ----- */
+
+.ebook-page {
+  display: flex;
+  flex-direction: column;
+  width: min(210mm, 100%);
+  min-height: 297mm;
+  /* 20mm matches @page margin */
+  padding: 20mm;
+  background: var(--ebook-bg);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+}
+
+/* ----- Chapter Cover ----- */
+
+.ebook-chapter-cover {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: min(210mm, 100%);
+  min-height: 297mm;
+  padding: var(--ebook-spacing-page-padding);
+  gap: 2rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+}
+
+.ebook-chapter-cover-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ebook-chapter-cover-number {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  opacity: 0.6;
+  margin-bottom: 1rem;
+}
+
+.ebook-chapter-cover-title {
+  font-family: var(--ebook-font-heading);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: inherit;
+  margin: 0 0 1.5rem;
+  line-height: 1.2;
+}
+
+.ebook-chapter-cover-description {
+  font-size: 1.05rem;
+  color: inherit;
+  opacity: 0.75;
+  margin: 0;
+  line-height: 1.7;
+  max-width: 40ch;
+}
+
+.ebook-chapter-cover-image-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ebook-chapter-cover-image {
+  max-width: 100%;
+  max-height: 55vh;
+  object-fit: contain;
+}
+
+/* ----- Acknowledgements ----- */
+
+/* transparent wrapper — inner .ebook-section handles the A4 card appearance */
+.ebook-acknowledgements {
+  display: contents;
+}
+
+/* ===========================
+   Print / PDF Styles
+   =========================== */
+
+@page {
+  size: A4 portrait;
+  margin: 20mm;
+  @bottom-center {
+    content: counter(page);
+    font-size: 9pt;
+    font-family: sans-serif;
+    color: #aaa;
+  }
+}
+
+@media print {
+  html,
+  body {
+    background: white;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Reset viewer layout */
+  .ebook-root {
+    background: white;
+    display: block;
+    padding: 0;
+    gap: 0;
+    min-height: 0;
+  }
+
+  .ebook-content {
+    display: block;
+  }
+
+  .ebook-acknowledgements {
+    display: block;
+  }
+
+  /* Remove screen-only card styles from all page units */
+  .ebook-cover,
+  .ebook-page,
+  .ebook-section,
+  .ebook-chapter-cover {
+    width: 100%;
+    max-width: 100%;
+    min-height: 0;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Page break rules */
+  .ebook-cover {
+    min-height: 100vh;
+    break-after: page;
+  }
+
+  .ebook-chapter-cover {
+    min-height: 100vh;
+    /* restore padding so chapter content isn't flush against page edge */
+    padding: var(--ebook-spacing-page-padding);
+    break-before: page;
+    break-after: page;
+  }
+
+  .ebook-page {
+    break-before: page;
+    break-after: page;
+  }
+
+  /* Each section starts on its own page for predictable pagination */
+  .ebook-section {
+    break-before: page;
+  }
+
+  .ebook-toc {
+    break-inside: avoid;
+  }
+
+  .ebook-toc-link,
+  .ebook-toc-link:visited {
+    color: var(--ebook-primary);
+    text-decoration: none;
+  }
+
+  .ebook-code {
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  /* Hide on-screen page numbers — print uses native @page counter */
+  .ebook-page-number {
+    display: none;
+  }
+}
