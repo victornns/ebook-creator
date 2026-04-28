@@ -1,0 +1,48 @@
+import type React from "react";
+import type { EbookCover } from "@/ebook-engine/types/ebook";
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  author: string;
+  cover: EbookCover;
+}
+
+export default function Cover({ title, subtitle, author, cover }: Props) {
+  const backgroundStyle: React.CSSProperties = cover.backgroundImage
+    ? {
+        backgroundImage: `url(${cover.backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }
+    : { backgroundColor: cover.backgroundColor ?? "var(--ebook-primary)" };
+
+  const textColor = cover.textColor ?? "#ffffff";
+
+  return (
+    <div
+      className="ebook-cover"
+      style={backgroundStyle}
+    >
+      <div className="ebook-cover-image-side">
+        {cover.image && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={typeof cover.image.src === "string" ? cover.image.src : cover.image.src.src}
+            alt={cover.image.alt}
+            className="ebook-cover-image"
+          />
+        )}
+      </div>
+
+      <div
+        className="ebook-cover-info-side"
+        style={{ color: textColor }}
+      >
+        <h1 className="ebook-cover-title">{title}</h1>
+        {subtitle && <p className="ebook-cover-subtitle">{subtitle}</p>}
+        <p className="ebook-cover-author">Por {author}</p>
+      </div>
+    </div>
+  );
+}
