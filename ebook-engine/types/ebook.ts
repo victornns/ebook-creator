@@ -1,6 +1,6 @@
 import type { StaticImageData } from "next/image";
 
-export type BlockType = "heading" | "paragraph" | "image" | "quote" | "list" | "divider" | "callout" | "code" | "item-list" | "steps";
+export type BlockType = "heading" | "paragraph" | "image" | "quote" | "list" | "divider" | "callout" | "code" | "item-list" | "steps" | "page-break";
 
 export interface Block {
   type: BlockType;
@@ -11,6 +11,10 @@ export interface Block {
   level?: 1 | 2 | 3;
   /** Optional label for `item-list` and `steps` blocks. */
   label?: string;
+  /** Force a page break before this block. */
+  breakBefore?: boolean;
+  /** Force a page break after this block. */
+  breakAfter?: boolean;
 }
 
 export interface ChapterCover {

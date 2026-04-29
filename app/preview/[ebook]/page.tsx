@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { ebookRegistry } from "@/ebooks";
-import EbookRenderer from "@/ebook-engine/components/EbookRenderer";
+import PaginatedEbookRenderer from "@/ebook-engine/renderer/PaginatedEbookRenderer";
 
 interface Props {
   params: Promise<{ ebook: string }>;
@@ -17,7 +17,7 @@ export default async function PreviewPage({ params }: Props) {
   if (!entry) notFound();
 
   return (
-    <EbookRenderer
+    <PaginatedEbookRenderer
       ebook={entry.ebook}
       theme={entry.theme}
     />

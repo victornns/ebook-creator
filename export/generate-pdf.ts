@@ -1,22 +1,19 @@
 import { chromium } from "playwright";
 import path from "path";
 import fs from "fs";
-import type { PageSize, PredefinedPageSize } from "@/ebook-engine/types/theme";
+import type { PageSize } from "@/ebook-engine/types/theme";
+import type { EbookTheme } from "@/ebook-engine/types/theme";
+import { resolvePageSize } from "@/ebook-engine/pagination/resolvePageSize";
 
-const PREDEFINED_FORMATS = new Set<string>(["A2", "A3", "A4", "A5", "Letter", "Legal", "Tabloid"]);
-
-async function resolvePageFormat(ebookId: string): Promise<{ format?: string; width?: string; height?: string }> {
+/** Loads the theme for an ebook and returns its resolved page dimensions in mm. */
+async function resolveEbookPageDimensions(ebookId: string): Promise<{ width: number; height: number }> {
   try {
     const themeModule = await import(`../ebooks/${ebookId}/theme`);
-    const pageSize: PageSize | undefined = themeModule.theme?.pageSize;
-    if (!pageSize) return { format: "A4" };
-    if (typeof pageSize === "string") {
-      if (PREDEFINED_FORMATS.has(pageSize)) return { format: pageSize as PredefinedPageSize };
-      return { format: "A4" };
-    }
-    return { width: `${pageSize.width}mm`, height: `${pageSize.height}mm` };
+    const theme: EbookTheme | undefined = themeModule.theme;
+    const pageSize: PageSize | undefined = theme?.pageSize;
+    return resolvePageSize(pageSize);
   } catch {
-    return { format: "A4" };
+    return resolvePageSize(); // defaults to A4
   }
 }
 
@@ -24,27 +21,41 @@ async function generatePDF(ebookId: string, baseUrl: string): Promise<void> {
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
+  const { width: pageWidthMm, height: pageHeightMm } = await resolveEbookPageDimensions(ebookId);
+
+  // Set viewport to match the page width so the JS layout renders at the correct size
+  const MM_TO_PX = 3.7795; // 1mm ≈ 3.7795px at 96 DPI
+  await page.setViewportSize({
+    width: Math.ceil(pageWidthMm * MM_TO_PX),
+    height: Math.ceil(pageHeightMm * MM_TO_PX),
+  });
+
   const url = `${baseUrl}/preview/${ebookId}`;
   console.log(`Abrindo: ${url}`);
   await page.goto(url, { waitUntil: "networkidle" });
+
+  // Wait for the JS pagination engine to finish measuring and laying out pages
+  await page.waitForSelector("[data-pagination-ready='true']", { timeout: 30_000 });
 
   const outputDir = path.join(process.cwd(), "output");
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  const pdfFormat = await resolvePageFormat(ebookId);
   const outputPath = path.join(outputDir, `${ebookId}.pdf`);
 
+  // Use zero margins — the JS layout already handles all margins internally.
+  // printBackground preserves full-page backgrounds (covers, chapter covers, etc.).
   await page.pdf({
     path: outputPath,
-    ...pdfFormat,
+    width: `${pageWidthMm}mm`,
+    height: `${pageHeightMm}mm`,
     printBackground: true,
     margin: {
-      top: "20mm",
-      right: "20mm",
-      bottom: "20mm",
-      left: "20mm",
+      top: "0mm",
+      right: "0mm",
+      bottom: "0mm",
+      left: "0mm",
     },
   });
 

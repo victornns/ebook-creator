@@ -403,7 +403,7 @@ export const demoEbook: Ebook = {
           content: "Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci.",
         },
         { type: "quote", content: "We do not need a handful of people doing sustainability perfectly. We need millions doing it imperfectly. — Lorem Ipsum" },
-        { type: "heading", level: 2, content: "Long-Term Mindset" },
+        { type: "heading", level: 2, content: "Long-Term Mindset", breakBefore: true },
         {
           type: "paragraph",
           content:

@@ -30,7 +30,6 @@
   flex-direction: column;
   justify-content: center;
   width: min(calc(var(--ebook-page-width-mm, 210) * 1mm), 100%);
-  min-height: calc(var(--ebook-page-height-mm, 297) * 1mm);
   padding: var(--ebook-spacing-page-padding);
   background: var(--ebook-bg, #fff);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
@@ -192,8 +191,7 @@
   display: flex;
   flex-direction: column;
   width: min(calc(var(--ebook-page-width-mm, 210) * 1mm), 100%);
-  min-height: calc(var(--ebook-page-height-mm, 297) * 1mm);
-  /* 20mm matches @page margin so browser content area = PDF content area */
+  /* min-height removed: JS pagination engine controls page sizing */
   padding: 20mm;
   background: var(--ebook-bg, #fff);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
@@ -381,6 +379,14 @@
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
 }
 
+/* When inside a full-page EbookPage shell, the cover fills the entire page */
+.ebook-page--full .ebook-cover {
+  width: 100%;
+  height: 100%;
+  min-height: unset;
+  box-shadow: none;
+}
+
 .ebook-cover-image-side {
   flex: 1;
   display: flex;
@@ -429,15 +435,17 @@
 
 /* ----- TOC Page ----- */
 
+/*
+  .ebook-page dimensions and layout are fully controlled by inline styles
+  (JS pagination engine in EbookPage.tsx). Only decorative styles live here.
+*/
 .ebook-page {
-  display: flex;
-  flex-direction: column;
-  width: min(calc(var(--ebook-page-width-mm, 210) * 1mm), 100%);
-  min-height: calc(var(--ebook-page-height-mm, 297) * 1mm);
-  /* 20mm matches @page margin */
-  padding: 20mm;
-  background: var(--ebook-bg, #fff);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+}
+
+/* Ensure first block inside a content page has no extra top margin */
+.ebook-page-blocks > *:first-child {
+  margin-top: 0;
 }
 
 /* ----- Chapter Cover ----- */
@@ -446,9 +454,6 @@
   position: relative;
   display: flex;
   align-items: center;
-  width: min(calc(var(--ebook-page-width-mm, 210) * 1mm), 100%);
-  min-height: calc(var(--ebook-page-height-mm, 297) * 1mm);
-  padding: var(--ebook-spacing-page-padding);
   gap: 2rem;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
 }
@@ -503,7 +508,7 @@
 
 /* ----- Acknowledgements ----- */
 
-/* transparent wrapper — inner .ebook-section handles the A4 card appearance */
+/* transparent wrapper — inner .ebook-section handles the card appearance */
 .ebook-acknowledgements {
   display: contents;
 }
@@ -512,17 +517,12 @@
    Print / PDF Styles
    =========================== */
 
-@page {
-  size: auto portrait;
-  margin: 20mm;
-  @bottom-center {
-    content: counter(page);
-    font-size: 9pt;
-    font-family: sans-serif;
-    color: #aaa;
-  }
-}
-
+/*
+  No @page margins or CSS break-* rules here.
+  The JS pagination engine (PaginatedEbookRenderer) is the single source of
+  truth for page size, margins, and page breaks.
+  Playwright exports with zero margins; each .ebook-page div = one PDF page.
+*/
 @media print {
   html,
   body {
@@ -531,62 +531,16 @@
     padding: 0;
   }
 
-  /* Reset viewer layout */
+  /* Strip the screen viewer chrome so pages stack flush for PDF export */
   .ebook-root {
     background: white;
     display: block;
     padding: 0;
     gap: 0;
-    min-height: 0;
-  }
-
-  .ebook-content {
-    display: block;
-  }
-
-  .ebook-acknowledgements {
-    display: block;
-  }
-
-  /* Remove screen-only card styles from all page units */
-  .ebook-cover,
-  .ebook-page,
-  .ebook-section,
-  .ebook-chapter-cover {
-    width: 100%;
-    max-width: 100%;
-    min-height: 0;
-    box-shadow: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  /* Page break rules */
-  .ebook-cover {
-    min-height: 100vh;
-    break-after: page;
-  }
-
-  .ebook-chapter-cover {
-    min-height: 100vh;
-    /* restore padding so chapter content isn't flush against page edge */
-    padding: var(--ebook-spacing-page-padding);
-    break-before: page;
-    break-after: page;
   }
 
   .ebook-page {
-    break-before: page;
-    break-after: page;
-  }
-
-  /* Each section starts on its own page for predictable pagination */
-  .ebook-section {
-    break-before: page;
-  }
-
-  .ebook-toc {
-    break-inside: avoid;
+    box-shadow: none;
   }
 
   .ebook-toc-link,
@@ -598,10 +552,5 @@
   .ebook-code {
     white-space: pre-wrap;
     word-break: break-all;
-  }
-
-  /* Hide on-screen page numbers — print uses native @page counter */
-  .ebook-page-number {
-    display: none;
   }
 }

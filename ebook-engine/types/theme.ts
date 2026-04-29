@@ -36,4 +36,14 @@ export interface EbookTheme {
   };
   /** Paper size for preview and PDF export. Defaults to A4. */
   pageSize?: PageSize;
+  /**
+   * Page margins in millimeters. Defaults to 20mm on all sides.
+   * The JS pagination engine uses these values — not CSS @page margins.
+   */
+  margins?: {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+  };
 }
