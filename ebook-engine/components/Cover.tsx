@@ -1,5 +1,7 @@
+import Image from "next/image";
 import type React from "react";
 import type { EbookCover } from "@/ebook-engine/types/ebook";
+import { resolveNextImageProps } from "@/ebook-engine/types/image";
 
 interface Props {
   title: string;
@@ -26,9 +28,8 @@ export default function Cover({ title, subtitle, author, cover }: Props) {
     >
       <div className="ebook-cover-image-side">
         {cover.image && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={typeof cover.image.src === "string" ? cover.image.src : cover.image.src.src}
+          <Image
+            {...resolveNextImageProps(cover.image.src)}
             alt={cover.image.alt}
             className="ebook-cover-image"
           />

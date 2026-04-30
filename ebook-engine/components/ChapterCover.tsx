@@ -1,5 +1,7 @@
+import Image from "next/image";
 import type React from "react";
 import type { ChapterCover as ChapterCoverType } from "@/ebook-engine/types/ebook";
+import { resolveNextImageProps } from "@/ebook-engine/types/image";
 
 interface Props {
   id: string;
@@ -20,7 +22,6 @@ export default function ChapterCover({ id, title, chapterCover, pageNumber }: Pr
       };
 
   const textColor = chapterCover.textColor ?? "#ffffff";
-  const imageSrc = chapterCover.image == null ? null : typeof chapterCover.image.src === "string" ? chapterCover.image.src : chapterCover.image.src.src;
 
   return (
     <section
@@ -36,12 +37,11 @@ export default function ChapterCover({ id, title, chapterCover, pageNumber }: Pr
         {chapterCover.description && <p className="ebook-chapter-cover-description">{chapterCover.description}</p>}
       </div>
 
-      {imageSrc && (
+      {chapterCover.image && (
         <div className="ebook-chapter-cover-image-side">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={imageSrc}
-            alt={chapterCover.image?.alt ?? ""}
+          <Image
+            {...resolveNextImageProps(chapterCover.image.src)}
+            alt={chapterCover.image.alt}
             className="ebook-chapter-cover-image"
           />
         </div>

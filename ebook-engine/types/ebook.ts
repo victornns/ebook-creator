@@ -1,4 +1,7 @@
-import type { StaticImageData } from "next/image";
+import type { EbookImage } from "./image";
+
+export type { EbookImage, LocalImage, RemoteImage } from "./image";
+export { cdnImage, isRemoteImage, resolveNextImageProps } from "./image";
 
 // ── Block base ───────────────────────────────────────────────────────────────
 
@@ -20,7 +23,7 @@ export interface RichParagraphBlock extends BlockBase {
 /** Image with an optional caption. Rendered as an atomic unit (avoids page splits). */
 export interface ImageWithCaptionBlock extends BlockBase {
   type: "image-with-caption";
-  src: StaticImageData | string;
+  src: EbookImage;
   alt: string;
   caption?: string;
 }
@@ -130,7 +133,7 @@ export interface ChapterCover {
   chapterNumber: number;
   description?: string;
   image?: {
-    src: StaticImageData | string;
+    src: EbookImage;
     alt: string;
   };
   backgroundColor?: string;
@@ -152,9 +155,9 @@ export interface EbookCover {
   /** Solid color background. Defaults to the theme primary color (--ebook-primary). */
   backgroundColor?: string;
   /** Optional centered image on the left side of the cover.
-   *  Accepts a static import (`import img from './assets/img.png'`) or a plain URL string. */
+   *  Use a static import or `cdnImage()` — see `EbookImage`. */
   image?: {
-    src: StaticImageData | string;
+    src: EbookImage;
     alt: string;
   };
   /** Text color for title, subtitle and author. Defaults to white. */

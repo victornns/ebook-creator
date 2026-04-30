@@ -1,6 +1,7 @@
 "use client";
 
 import type React from "react";
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Ebook } from "@/ebook-engine/types/ebook";
 import type { ChapterCover as ChapterCoverType } from "@/ebook-engine/types/ebook";
@@ -10,6 +11,7 @@ import type { MeasuredBlock } from "@/ebook-engine/pagination/paginateSection";
 import type { PageLayout } from "@/ebook-engine/pagination/resolveLayout";
 import { resolveLayout } from "@/ebook-engine/pagination/resolveLayout";
 import { paginateEbook } from "@/ebook-engine/pagination/paginateEbook";
+import { resolveNextImageProps } from "@/ebook-engine/types/image";
 import EbookPageShell from "@/ebook-engine/components/EbookPage";
 import Block from "@/ebook-engine/components/Block";
 import Cover from "@/ebook-engine/components/Cover";
@@ -45,7 +47,6 @@ function useGoogleFonts(families: string[] | undefined) {
 
 function renderChapterCoverContent(chapterCover: ChapterCoverType, sectionTitle: string) {
   const textColor = chapterCover.textColor ?? "#ffffff";
-  const imageSrc = chapterCover.image == null ? null : typeof chapterCover.image.src === "string" ? chapterCover.image.src : chapterCover.image.src.src;
 
   return (
     <div
@@ -66,12 +67,11 @@ function renderChapterCoverContent(chapterCover: ChapterCoverType, sectionTitle:
         <h2 className="ebook-chapter-cover-title">{sectionTitle}</h2>
         {chapterCover.description && <p className="ebook-chapter-cover-description">{chapterCover.description}</p>}
       </div>
-      {imageSrc && (
+      {chapterCover.image && (
         <div className="ebook-chapter-cover-image-side">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={imageSrc}
-            alt={chapterCover.image?.alt ?? ""}
+          <Image
+            {...resolveNextImageProps(chapterCover.image.src)}
+            alt={chapterCover.image.alt}
             className="ebook-chapter-cover-image"
           />
         </div>
@@ -222,18 +222,9 @@ export default function PaginatedEbookRenderer({ ebook, theme }: Props) {
       // Wait for fonts so text heights are accurate
       await document.fonts.ready;
 
-      // Wait for any images in the measuring container
-      const images = Array.from(container!.querySelectorAll<HTMLImageElement>("img"));
-      await Promise.all(
-        images.map((img) =>
-          img.complete
-            ? Promise.resolve()
-            : new Promise<void>((resolve) => {
-                img.onload = () => resolve();
-                img.onerror = () => resolve();
-              }),
-        ),
-      );
+      // next/image reserves the correct space via known dimensions (static imports
+      // or explicit width/height from cdnImage) even before pixels load, so waiting
+      // for images is unnecessary and would hang for lazy-loaded off-screen images.
 
       const pxPerMm = mmEl!.getBoundingClientRect().height;
       if (pxPerMm < 0.1) return;

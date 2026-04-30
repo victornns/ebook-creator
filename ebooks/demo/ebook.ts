@@ -25,6 +25,12 @@ export const demoEbook: Ebook = {
         { type: "highlight", content: "Every choice we make — from what we eat to how we move — has an environmental consequence." },
         { type: "image-with-caption", src: imageContent, alt: "A sustainable landscape with wind turbines and green hills", caption: "Renewable energy now accounts for over 30% of global electricity generation." },
         { type: "rich-paragraph", content: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo." },
+
+        // ── Exemplos de markdown ──────────────────────────────────────────────
+        { type: "rich-paragraph", content: "**Negrito**, *itálico*, ~~tachado~~ e `código inline` funcionando via react-markdown." },
+        { type: "rich-paragraph", content: "Combinações: ***negrito e itálico juntos***, `código` dentro de uma frase normal, e um [link externo](https://example.com) com texto personalizado." },
+        { type: "rich-paragraph", content: "Escape de caracteres: \\*asterisco literal\\*, \\`backtick literal\\`, \\[colchete literal\\]." },
+        { type: "rich-paragraph", content: "__Negrito com underline__, _itálico com underline_ — sintaxe alternativa do Markdown (via remark-gfm)." },
       ],
     },
 
