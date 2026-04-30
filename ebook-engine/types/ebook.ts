@@ -1,21 +1,130 @@
 import type { StaticImageData } from "next/image";
 
-export type BlockType = "heading" | "paragraph" | "image" | "quote" | "list" | "divider" | "callout" | "code" | "item-list" | "steps" | "page-break";
+// ── Block base ───────────────────────────────────────────────────────────────
 
-export interface Block {
-  type: BlockType;
-  content?: string;
-  items?: string[];
-  src?: string;
-  alt?: string;
-  level?: 1 | 2 | 3;
-  /** Optional label for `item-list` and `steps` blocks. */
-  label?: string;
+interface BlockBase {
   /** Force a page break before this block. */
   breakBefore?: boolean;
   /** Force a page break after this block. */
   breakAfter?: boolean;
 }
+
+// ── Content blocks (visual / presentational) ─────────────────────────────────
+
+/** Body text with inline Markdown support: **bold**, *italic*, `code`, [text](url). */
+export interface RichParagraphBlock extends BlockBase {
+  type: "rich-paragraph";
+  content: string;
+}
+
+/** Image with an optional caption. Rendered as an atomic unit (avoids page splits). */
+export interface ImageWithCaptionBlock extends BlockBase {
+  type: "image-with-caption";
+  src: StaticImageData | string;
+  alt: string;
+  caption?: string;
+}
+
+/** Short, visually emphasized text. Used for key phrases or important takeaways. */
+export interface HighlightBlock extends BlockBase {
+  type: "highlight";
+  content: string;
+}
+
+/** Informational block for tips, observations, or contextual explanations. */
+export interface NoteBlock extends BlockBase {
+  type: "note";
+  label?: string;
+  content: string;
+}
+
+/** Critical or cautionary message. Styled to stand out more than a note. */
+export interface WarningBlock extends BlockBase {
+  type: "warning";
+  label?: string;
+  content: string;
+}
+
+/** Call-to-action block for engagement (e.g. "try this", "share", "continue reading"). */
+export interface CtaBlock extends BlockBase {
+  type: "cta";
+  content: string;
+  label?: string;
+}
+
+/** Structured tabular data. */
+export interface TableBlock extends BlockBase {
+  type: "table";
+  headers: string[];
+  rows: string[][];
+  caption?: string;
+}
+
+// ── Structural / utility blocks ──────────────────────────────────────────────
+
+export interface HeadingBlock extends BlockBase {
+  type: "heading";
+  content: string;
+  level?: 1 | 2 | 3;
+}
+
+export interface QuoteBlock extends BlockBase {
+  type: "quote";
+  content: string;
+}
+
+export interface ListBlock extends BlockBase {
+  type: "list";
+  items: string[];
+}
+
+export interface DividerBlock extends BlockBase {
+  type: "divider";
+}
+
+export interface CodeBlock extends BlockBase {
+  type: "code";
+  content: string;
+}
+
+export interface ItemListBlock extends BlockBase {
+  type: "item-list";
+  label?: string;
+  items: string[];
+}
+
+export interface StepsBlock extends BlockBase {
+  type: "steps";
+  label?: string;
+  items: string[];
+}
+
+export interface PageBreakBlock extends BlockBase {
+  type: "page-break";
+}
+
+// ── Block union ──────────────────────────────────────────────────────────────
+
+export type Block =
+  // Content (visual) blocks
+  | RichParagraphBlock
+  | ImageWithCaptionBlock
+  | HighlightBlock
+  | NoteBlock
+  | WarningBlock
+  | CtaBlock
+  | TableBlock
+  // Structural / utility blocks
+  | HeadingBlock
+  | QuoteBlock
+  | ListBlock
+  | DividerBlock
+  | CodeBlock
+  | ItemListBlock
+  | StepsBlock
+  | PageBreakBlock;
+
+export type BlockType = Block["type"];
 
 export interface ChapterCover {
   chapterNumber: number;

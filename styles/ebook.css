@@ -229,9 +229,23 @@
   color: var(--ebook-secondary);
 }
 
-.ebook-paragraph {
+.ebook-rich-paragraph {
   margin: 0 0 var(--ebook-spacing-block-gap);
   font-size: 1rem;
+}
+
+.ebook-rich-paragraph .ebook-inline-code {
+  font-family: var(--ebook-font-mono);
+  font-size: 0.875em;
+  background-color: color-mix(in srgb, var(--ebook-primary) 8%, transparent);
+  padding: 0.1em 0.35em;
+  border-radius: 0.2em;
+}
+
+.ebook-rich-paragraph .ebook-link {
+  color: var(--ebook-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 .ebook-quote {
@@ -338,13 +352,137 @@
   margin: var(--ebook-spacing-section-gap) 0;
 }
 
-.ebook-callout {
-  background-color: color-mix(in srgb, var(--ebook-accent) 10%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ebook-accent) 30%, transparent);
-  border-radius: 0.5rem;
-  padding: 1rem 1.5rem;
+/* ----- Content blocks ----- */
+
+.ebook-highlight {
+  font-family: var(--ebook-font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ebook-primary);
+  border-left: 4px solid var(--ebook-accent);
+  padding: 0.75rem 1.25rem;
   margin: var(--ebook-spacing-block-gap) 0;
-  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.ebook-note {
+  background-color: color-mix(in srgb, var(--ebook-accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ebook-accent) 25%, transparent);
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  margin: var(--ebook-spacing-block-gap) 0;
+}
+
+.ebook-note-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ebook-accent);
+  margin: 0 0 0.4rem;
+}
+
+.ebook-note-content {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.ebook-warning {
+  background-color: color-mix(in srgb, #e65c00 8%, transparent);
+  border: 1.5px solid color-mix(in srgb, #e65c00 40%, transparent);
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  margin: var(--ebook-spacing-block-gap) 0;
+}
+
+.ebook-warning-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #c0392b;
+  margin: 0 0 0.4rem;
+}
+
+.ebook-warning-content {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: color-mix(in srgb, #c0392b 80%, var(--ebook-text));
+}
+
+.ebook-cta {
+  background-color: var(--ebook-primary);
+  color: #fff;
+  border-radius: 0.5rem;
+  padding: 1.25rem 1.5rem;
+  margin: var(--ebook-spacing-block-gap) 0;
+  text-align: center;
+}
+
+.ebook-cta-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: color-mix(in srgb, #fff 65%, transparent);
+  margin: 0 0 0.5rem;
+}
+
+.ebook-cta-content {
+  margin: 0;
+  font-family: var(--ebook-font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* ----- Table block ----- */
+
+.ebook-table-figure {
+  margin: var(--ebook-spacing-block-gap) 0;
+}
+
+.ebook-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.ebook-table-th {
+  text-align: left;
+  font-family: var(--ebook-font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ebook-accent);
+  padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid color-mix(in srgb, var(--ebook-primary) 25%, transparent);
+}
+
+.ebook-table-tr:nth-child(even) {
+  background-color: color-mix(in srgb, var(--ebook-primary) 4%, transparent);
+}
+
+.ebook-table-td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--ebook-text) 8%, transparent);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.ebook-table-tr:last-child .ebook-table-td {
+  border-bottom: none;
+}
+
+.ebook-table-caption {
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  color: color-mix(in srgb, var(--ebook-text) 50%, transparent);
+  text-align: center;
+  font-style: italic;
 }
 
 .ebook-code {
@@ -359,7 +497,9 @@
   white-space: pre;
 }
 
-.ebook-figure {
+/* ----- Image with caption ----- */
+
+.ebook-image-with-caption {
   margin: var(--ebook-spacing-block-gap) 0;
   text-align: center;
 }
@@ -368,6 +508,15 @@
   max-width: 100%;
   height: auto;
   border-radius: 0.25rem;
+  display: block;
+  margin: 0 auto;
+}
+
+.ebook-image-caption {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: color-mix(in srgb, var(--ebook-text) 55%, transparent);
+  font-style: italic;
 }
 
 /* ----- Cover ----- */

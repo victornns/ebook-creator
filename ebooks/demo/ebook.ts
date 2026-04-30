@@ -19,11 +19,12 @@ export const demoEbook: Ebook = {
       title: "Introduction",
       blocks: [
         { type: "heading", level: 1, content: "Introduction" },
-        { type: "paragraph", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-        { type: "paragraph", content: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+        { type: "rich-paragraph", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
+        { type: "rich-paragraph", content: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui **officia deserunt** mollit anim id est laborum." },
         { type: "quote", content: "The Earth does not belong to us. We belong to the Earth. — Demo Author" },
-        { type: "image", src: imageContent.src, alt: "A sustainable landscape with wind turbines and green hills" },
-        { type: "paragraph", content: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo." },
+        { type: "highlight", content: "Every choice we make — from what we eat to how we move — has an environmental consequence." },
+        { type: "image-with-caption", src: imageContent, alt: "A sustainable landscape with wind turbines and green hills", caption: "Renewable energy now accounts for over 30% of global electricity generation." },
+        { type: "rich-paragraph", content: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo." },
       ],
     },
 
@@ -33,10 +34,10 @@ export const demoEbook: Ebook = {
       title: "How to Use This Book",
       blocks: [
         { type: "heading", level: 1, content: "How to Use This Book" },
-        { type: "paragraph", content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt." },
+        { type: "rich-paragraph", content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt." },
         { type: "heading", level: 2, content: "General Guidelines" },
         { type: "list", items: ["Read each chapter in sequence for the best learning experience", "Apply one practice at a time before moving to the next", "Track your progress using the worksheets at the end of each chapter", "Share your journey with your community for greater impact"] },
-        { type: "callout", content: "Each chapter builds on the previous one. Take your time and let the ideas settle before moving forward." },
+        { type: "note", content: "Each chapter builds on the previous one. Take your time and let the ideas settle before moving forward." },
       ],
     },
 
@@ -59,11 +60,11 @@ export const demoEbook: Ebook = {
       title: "The Living System",
       blocks: [
         { type: "heading", level: 1, content: "The Living System" },
-        { type: "paragraph", content: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." },
-        { type: "paragraph", content: "Nam libero tempore cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus." },
+        { type: "rich-paragraph", content: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." },
+        { type: "rich-paragraph", content: "Nam libero tempore cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus." },
         { type: "list", items: ["Biodiversity as the foundation of resilience", "Ecosystem services we often take for granted", "The carbon cycle and its delicate balance", "Ocean systems and their role in climate regulation"] },
-        { type: "callout", content: "Roughly 80% of the Earth biodiversity exists in tropical rainforests, which cover less than 6% of the planet surface." },
-        { type: "image", src: imageContent.src, alt: "Green forest and natural ecosystem" },
+        { type: "note", content: "Roughly 80% of the Earth's biodiversity exists in tropical rainforests, which cover less than 6% of the planet's surface." },
+        { type: "image-with-caption", src: imageContent, alt: "Green forest and natural ecosystem", caption: "Tropical forests are home to more than half of the world's terrestrial species." },
       ],
     },
 
@@ -74,22 +75,22 @@ export const demoEbook: Ebook = {
       blocks: [
         { type: "heading", level: 1, content: "Climate Fundamentals" },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
         },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content:
             "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.",
         },
         { type: "heading", level: 2, content: "The Greenhouse Effect" },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content:
             "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.",
         },
-        { type: "paragraph", content: "Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus." },
+        { type: "rich-paragraph", content: "Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus." },
         {
           type: "list",
           items: [
@@ -100,18 +101,29 @@ export const demoEbook: Ebook = {
             "Water vapor: the most abundant greenhouse gas and a key feedback mechanism",
           ],
         },
+        {
+          type: "table",
+          caption: "Key greenhouse gases and their global warming potential (GWP) over 100 years.",
+          headers: ["Gas", "Symbol", "GWP (100yr)", "Main source"],
+          rows: [
+            ["Carbon dioxide", "CO₂", "1", "Fossil fuels, deforestation"],
+            ["Methane", "CH₄", "28", "Agriculture, natural gas, landfill"],
+            ["Nitrous oxide", "N₂O", "265", "Fertilisers, livestock"],
+            ["HFC-134a", "HFCs", "1,430", "Refrigeration, aerosols"],
+          ],
+        },
         { type: "heading", level: 2, content: "Tipping Points" },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content: "Temporibus autem quibusdam et aut officiis debitis rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur.",
         },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content: "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti.",
         },
-        { type: "callout", content: "Scientists have identified at least 16 climate tipping points — thresholds beyond which changes become self-sustaining and largely irreversible." },
+        { type: "warning", label: "Critical threshold", content: "Scientists have identified at least 16 climate tipping points — thresholds beyond which changes become self-sustaining and largely irreversible. We have likely already crossed five." },
         { type: "heading", level: 2, content: "Observed Changes Since 1850" },
-        { type: "paragraph", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante." },
+        { type: "rich-paragraph", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante." },
         {
           type: "item-list",
           label: "Key Indicators",
@@ -125,17 +137,17 @@ export const demoEbook: Ebook = {
           ],
         },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content: "Nam libero tempore cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis rerum necessitatibus saepe eveniet.",
         },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content:
             "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.",
         },
         { type: "quote", content: "We are the first generation to feel the impact of climate change and the last generation that can do something about it. — Lorem Ipsum" },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content:
             "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.",
         },
@@ -161,8 +173,8 @@ export const demoEbook: Ebook = {
       title: "Conscious Consumption",
       blocks: [
         { type: "heading", level: 1, content: "Conscious Consumption" },
-        { type: "paragraph", content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est qui dolorem ipsum quia dolor sit amet." },
-        { type: "paragraph", content: "Ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur." },
+        { type: "rich-paragraph", content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est qui dolorem ipsum quia dolor sit amet." },
+        { type: "rich-paragraph", content: "Ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur." },
         { type: "heading", level: 2, content: "The 5 Rs Framework" },
         {
           type: "steps",
@@ -175,8 +187,8 @@ export const demoEbook: Ebook = {
             "Rot — compost organic matter to return nutrients to the soil and divert waste from landfills.",
           ],
         },
-        { type: "callout", content: "A single reusable water bottle can replace over 1,000 single-use plastic bottles in its lifetime." },
-        { type: "paragraph", content: "Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus." },
+        { type: "note", content: "A single reusable water bottle can replace over 1,000 single-use plastic bottles in its lifetime." },
+        { type: "rich-paragraph", content: "Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus." },
       ],
     },
 
@@ -187,18 +199,18 @@ export const demoEbook: Ebook = {
       blocks: [
         { type: "heading", level: 1, content: "Energy and Home" },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.",
         },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content:
             "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.",
         },
         { type: "heading", level: 2, content: "Auditing Your Home Energy Use" },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content:
             "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.",
         },
@@ -217,21 +229,22 @@ export const demoEbook: Ebook = {
           ],
         },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content:
             "Temporibus autem quibusdam et aut officiis debitis rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
         },
         { type: "heading", level: 2, content: "Switching to Renewables" },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content: "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum.",
         },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content: "Nam libero tempore cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis rerum necessitatibus saepe eveniet.",
         },
-        { type: "callout", content: "Solar panel installations have dropped in cost by over 90% since 2010, making them accessible to more households than ever before." },
-        { type: "image", src: imageContent.src, alt: "Renewable energy and sustainable home" },
+        { type: "note", label: "Good to know", content: "Solar panel installations have dropped in cost by over 90% since 2010, making them accessible to more households than ever before." },
+        { type: "warning", label: "Don't delay", content: "Postponing home energy upgrades typically costs more in the long run. Rising energy prices mean every year of delay increases both your bills and your lifetime carbon footprint." },
+        { type: "image-with-caption", src: imageContent, alt: "Renewable energy and sustainable home", caption: "Rooftop solar combined with a home battery can eliminate grid dependence during daylight hours." },
         { type: "heading", level: 2, content: "Step-by-Step Home Transition Plan" },
         {
           type: "steps",
@@ -247,13 +260,13 @@ export const demoEbook: Ebook = {
           ],
         },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
         },
-        { type: "paragraph", content: "Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra." },
+        { type: "rich-paragraph", content: "Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra." },
         { type: "heading", level: 2, content: "Water Conservation" },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content:
             "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident. Nam libero tempore cum soluta nobis est eligendi optio cumque nihil impedit.",
         },
@@ -270,13 +283,13 @@ export const demoEbook: Ebook = {
           ],
         },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content:
             "Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Temporibus autem quibusdam et aut officiis debitis rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.",
         },
         { type: "quote", content: "Small changes, consistently applied, accumulate into transformation. — Lorem Ipsum" },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content:
             "Nam libero tempore cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti.",
         },
@@ -302,8 +315,8 @@ export const demoEbook: Ebook = {
       title: "Community Action",
       blocks: [
         { type: "heading", level: 1, content: "Community Action" },
-        { type: "paragraph", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris." },
-        { type: "paragraph", content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est." },
+        { type: "rich-paragraph", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris." },
+        { type: "rich-paragraph", content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est." },
         { type: "heading", level: 2, content: "Ways to Get Involved" },
         {
           type: "list",
@@ -316,9 +329,9 @@ export const demoEbook: Ebook = {
             "Volunteer with reforestation or habitat restoration programmes",
           ],
         },
-        { type: "callout", content: "Research shows that individual action is amplified by a factor of 3-7x when done in a social or community context." },
-        { type: "image", src: imageContent.src, alt: "Community working together in nature" },
-        { type: "paragraph", content: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo." },
+        { type: "highlight", content: "Individual action is amplified by a factor of 3–7× when done in a social or community context." },
+        { type: "image-with-caption", src: imageContent, alt: "Community working together in nature", caption: "Collective action consistently delivers faster and more durable results than isolated individual efforts." },
+        { type: "rich-paragraph", content: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo." },
       ],
     },
 
@@ -329,18 +342,18 @@ export const demoEbook: Ebook = {
       blocks: [
         { type: "heading", level: 1, content: "Measuring Your Impact" },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content:
             "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.",
         },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content:
             "Nam libero tempore cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis rerum necessitatibus saepe eveniet ut et voluptates.",
         },
         { type: "heading", level: 2, content: "Carbon Footprint Breakdown" },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.",
         },
         {
@@ -356,13 +369,13 @@ export const demoEbook: Ebook = {
           ],
         },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content:
             "Temporibus autem quibusdam et aut officiis debitis rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
         },
         { type: "heading", level: 2, content: "Setting Personal Targets" },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content: "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti.",
         },
         {
@@ -377,13 +390,13 @@ export const demoEbook: Ebook = {
             "Review and adjust targets every six months as your habits evolve.",
           ],
         },
-        { type: "callout", content: "The average person in a high-income country produces 10-15 tonnes of CO2e per year. A sustainable level is around 2 tonnes by 2050." },
+        { type: "note", label: "Perspective", content: "The average person in a high-income country produces 10–15 tonnes of CO₂e per year. A sustainable level is around 2 tonnes by 2050." },
         { type: "heading", level: 2, content: "Offsetting vs Reducing" },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos.",
         },
-        { type: "paragraph", content: "Nam libero tempore cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. At vero eos et accusamus et iusto odio dignissimos ducimus." },
+        { type: "rich-paragraph", content: "Nam libero tempore cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. At vero eos et accusamus et iusto odio dignissimos ducimus." },
         {
           type: "list",
           items: [
@@ -395,26 +408,26 @@ export const demoEbook: Ebook = {
           ],
         },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.",
         },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content: "Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci.",
         },
         { type: "quote", content: "We do not need a handful of people doing sustainability perfectly. We need millions doing it imperfectly. — Lorem Ipsum" },
         { type: "heading", level: 2, content: "Long-Term Mindset", breakBefore: true },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content:
             "Temporibus autem quibusdam et aut officiis debitis rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus.",
         },
         {
-          type: "paragraph",
+          type: "rich-paragraph",
           content:
             "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
         },
-        { type: "callout", content: "Sustainability is not a destination but a direction. Every step taken today shapes the world your children and grandchildren will inhabit." },
+        { type: "highlight", content: "Sustainability is not a destination but a direction. Every step taken today shapes the world your children and grandchildren will inhabit." },
       ],
     },
 
@@ -424,12 +437,13 @@ export const demoEbook: Ebook = {
       title: "Final Notes",
       blocks: [
         { type: "heading", level: 1, content: "Final Notes" },
-        { type: "paragraph", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip." },
+        { type: "rich-paragraph", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip." },
         { type: "heading", level: 2, content: "Summary" },
         { type: "list", items: ["Understand the systems you are part of", "Reduce before you offset", "Act in community, not just individually", "Measure, learn, and adapt continuously"] },
         { type: "divider" },
-        { type: "paragraph", content: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." },
-        { type: "callout", content: "Thank you for reading Living Green. The planet thanks you too." },
+        { type: "rich-paragraph", content: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident." },
+        { type: "note", content: "Thank you for reading Living Green. The planet thanks you too." },
+        { type: "cta", label: "Your next step", content: "Share one insight from this book with someone you care about. Small conversations are how big movements begin." },
       ],
     },
   ],
@@ -439,8 +453,8 @@ export const demoEbook: Ebook = {
     title: "Acknowledgements",
     blocks: [
       { type: "heading", level: 1, content: "Acknowledgements" },
-      { type: "paragraph", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt." },
-      { type: "paragraph", content: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo." },
+      { type: "rich-paragraph", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt." },
+      { type: "rich-paragraph", content: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo." },
     ],
   },
 };
