@@ -908,6 +908,12 @@
 
   .ebook-page {
     box-shadow: none;
+    /* Fill the PDF canvas exactly — bypasses mm→px rounding that causes a ~1px
+       white gap on the right when the browser floors 210mm to device pixels. */
+    width: 100% !important;
+    /* Allow the SVG background (inset: -3px) to bleed past the pixel-rounded
+       edge of the page element so no background color leaks through. */
+    overflow: visible !important;
   }
 
   .ebook-toc-link,
