@@ -13,6 +13,7 @@ export default function ImageWithCaption({ block }: Props) {
         {...resolveNextImageProps(block.src)}
         alt={block.alt}
         className="ebook-image"
+        loading="eager"
       />
       {block.caption && <figcaption className="ebook-image-caption">{block.caption}</figcaption>}
     </figure>
