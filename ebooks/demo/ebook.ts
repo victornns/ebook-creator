@@ -1,10 +1,10 @@
 import type { Ebook } from "@/ebook-engine/types/ebook";
-import imageCover from "./assets/thumb-vertical.png";
-import imageContent from "./assets/thumb-horizontal.jpg";
+import imageCover from "./assets/cover-image.png";
+import imageContent from "./assets/sample-image.jpg";
 
 export const demoEbook: Ebook = {
   id: "demo",
-  title: "Living Green",
+  title: "Demo",
   subtitle: "A practical guide to sustainability, conscious living, and building a better future for our planet",
   author: "Demo Author",
   cover: {

@@ -11,7 +11,7 @@ export default function Home() {
         <div className="mb-14">
           <span className="text-xs font-semibold tracking-widest uppercase text-zinc-400">Ebook Creator</span>
           <h1 className="mt-3 text-3xl font-bold tracking-tight text-zinc-900">Create e-books by code.</h1>
-          <p className="mt-4 text-zinc-500 leading-relaxed text-sm max-w-lg">Type your content, apply a theme, export to PDF — simple and scalable.</p>
+          <p className="mt-4 text-zinc-500 leading-relaxed text-sm max-w-lg">Type your content, apply a theme, export to PDF/EPUB — simple and scalable.</p>
         </div>
 
         {/* Ebook list */}
@@ -23,7 +23,7 @@ export default function Home() {
             >
               <p className="font-semibold text-zinc-900">{entry.ebook.title}</p>
               {entry.ebook.subtitle && <p className="text-zinc-500 text-sm mt-0.5 leading-snug">{entry.ebook.subtitle}</p>}
-              <p className="text-zinc-400 text-xs mt-1">por {entry.ebook.author}</p>
+              <p className="text-zinc-400 text-xs mt-1">by {entry.ebook.author}</p>
 
               <div className="flex gap-3 mt-4">
                 <Link
@@ -37,7 +37,7 @@ export default function Home() {
                   className="text-xs font-medium px-3 py-1.5 rounded-md border border-zinc-200 text-zinc-600 hover:border-zinc-400 transition-colors"
                   target="_blank"
                 >
-                  Visualizar PDF
+                  View PDF
                 </Link>
               </div>
             </li>
