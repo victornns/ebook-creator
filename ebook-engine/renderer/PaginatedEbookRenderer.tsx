@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Ebook, ChapterCover as ChapterCoverType } from "@/ebook-engine/types/ebook";
 import type { EbookTheme } from "@/ebook-engine/types/theme";
+import type { BackgroundConfig } from "@/ebook-engine/types/background";
+import Background from "@/ebook-engine/components/backgrounds/Background";
 import type { EbookPage, PaginationResult } from "@/ebook-engine/pagination/paginateEbook";
 import type { MeasuredBlock } from "@/ebook-engine/pagination/paginateSection";
 import type { PageLayout } from "@/ebook-engine/pagination/resolveLayout";
@@ -53,6 +55,19 @@ function resolveBackgroundStyle(src: { backgroundImage?: string; backgroundColor
   return src.backgroundImage ? { backgroundImage: `url(${src.backgroundImage})`, backgroundSize: "cover", backgroundPosition: "center" } : { backgroundColor: src.backgroundColor ?? defaultColor };
 }
 
+/**
+ * Returns either an SVG background node (when a variant is configured) or
+ * a CSS backgroundStyle to be applied directly to the page shell.
+ */
+function resolvePageBackground(src: { background?: BackgroundConfig; backgroundImage?: string; backgroundColor?: string }, defaultColor: string, themeVariant?: string): { backgroundStyle?: React.CSSProperties; backgroundNode?: React.ReactNode } {
+  const variant = src.background?.variant ?? (themeVariant as BackgroundConfig["variant"] | undefined);
+  if (variant) {
+    const config: BackgroundConfig = { variant, ...src.background };
+    return { backgroundNode: <Background config={config} /> };
+  }
+  return { backgroundStyle: resolveBackgroundStyle(src, defaultColor) };
+}
+
 // ── Page renderers ────────────────────────────────────────────────────────────
 
 function renderChapterCoverContent(chapterCover: ChapterCoverType, sectionTitle: string) {
@@ -92,13 +107,14 @@ function renderChapterCoverContent(chapterCover: ChapterCoverType, sectionTitle:
   );
 }
 
-function renderPage(page: EbookPage, layout: PageLayout, sectionPageMap: Record<string, number>): React.ReactNode {
+function renderPage(page: EbookPage, layout: PageLayout, sectionPageMap: Record<string, number>, themeBackgroundVariant?: BackgroundConfig["variant"]): React.ReactNode {
   const anchorId = page.isFirstPageOfSection ? page.sectionId : undefined;
 
   switch (page.type) {
     case "cover": {
       const { coverData } = page;
       if (!coverData) return null;
+      const { backgroundStyle: coverBgStyle, backgroundNode: coverBgNode } = resolvePageBackground(coverData.cover, "var(--ebook-primary)", themeBackgroundVariant);
       return (
         <EbookPageShell
           key={page.id}
@@ -106,7 +122,8 @@ function renderPage(page: EbookPage, layout: PageLayout, sectionPageMap: Record<
           pageNumber={page.pageNumber}
           showPageNumber={false}
           fullPage
-          backgroundStyle={resolveBackgroundStyle(coverData.cover, "var(--ebook-primary)")}
+          backgroundStyle={coverBgStyle}
+          backgroundNode={coverBgNode}
         >
           <Cover
             title={coverData.title}
@@ -136,6 +153,7 @@ function renderPage(page: EbookPage, layout: PageLayout, sectionPageMap: Record<
     case "chapter-cover": {
       const { chapterCover, sectionTitle } = page;
       if (!chapterCover) return null;
+      const { backgroundStyle: chBgStyle, backgroundNode: chBgNode } = resolvePageBackground(chapterCover, "var(--ebook-secondary)", themeBackgroundVariant);
       return (
         <EbookPageShell
           key={page.id}
@@ -144,7 +162,8 @@ function renderPage(page: EbookPage, layout: PageLayout, sectionPageMap: Record<
           pageNumber={page.pageNumber}
           showPageNumber={page.showPageNumber}
           fullPage
-          backgroundStyle={resolveBackgroundStyle(chapterCover, "var(--ebook-secondary)")}
+          backgroundStyle={chBgStyle}
+          backgroundNode={chBgNode}
         >
           {renderChapterCoverContent(chapterCover, sectionTitle ?? "")}
         </EbookPageShell>
@@ -200,6 +219,12 @@ export default function PaginatedEbookRenderer({ ebook, theme }: Props) {
     "--ebook-spacing-section-gap": theme.spacing.sectionGap,
     "--ebook-spacing-block-gap": theme.spacing.blockGap,
     "--ebook-spacing-page-padding": theme.spacing.pagePadding,
+    // Background palette — consumed by SVG background variants.
+    // Defaults to theme colors; individual pages may override via BackgroundConfig.colors.
+    "--ebook-bg-primary": theme.colors.primary,
+    "--ebook-bg-secondary": theme.colors.secondary,
+    "--ebook-bg-accent": theme.colors.accent,
+    "--ebook-bg-neutral": "#f8f9fa",
   } as React.CSSProperties;
 
   const [phase, setPhase] = useState<"measuring" | "ready">("measuring");
@@ -317,7 +342,7 @@ export default function PaginatedEbookRenderer({ ebook, theme }: Props) {
       )}
 
       {/* Rendered pages (visible after pagination is complete) */}
-      {phase === "ready" && result.pages.map((page) => renderPage(page, layout, result.sectionPageMap))}
+      {phase === "ready" && result.pages.map((page) => renderPage(page, layout, result.sectionPageMap, theme.background?.variant))}
     </div>
   );
 }

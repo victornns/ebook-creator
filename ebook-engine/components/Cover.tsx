@@ -11,13 +11,17 @@ interface Props {
 }
 
 export default function Cover({ title, subtitle, author, cover }: Props) {
-  const backgroundStyle: React.CSSProperties = cover.backgroundImage
-    ? {
-        backgroundImage: `url(${cover.backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }
-    : { backgroundColor: cover.backgroundColor ?? "var(--ebook-primary)" };
+  // When an SVG background is used, the Cover div must be transparent so the
+  // background component (rendered beneath it) shows through.
+  const backgroundStyle: React.CSSProperties = cover.background
+    ? {}
+    : cover.backgroundImage
+      ? {
+          backgroundImage: `url(${cover.backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }
+      : { backgroundColor: cover.backgroundColor ?? "var(--ebook-primary)" };
 
   const textColor = cover.textColor ?? "#ffffff";
 

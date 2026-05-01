@@ -1,3 +1,5 @@
+import type { BackgroundVariant } from "./background";
+
 export type PredefinedPageSize = "A2" | "A3" | "A4" | "A5" | "Letter" | "Legal" | "Tabloid";
 
 /** Custom page size in millimeters. */
@@ -33,6 +35,13 @@ export interface EbookTheme {
     sectionGap: string;
     blockGap: string;
     pagePadding: string;
+  };
+  /**
+   * Default SVG background applied to cover and chapter-cover pages.
+   * Individual pages can override this via their own `background` field.
+   */
+  background?: {
+    variant?: BackgroundVariant;
   };
   /** Paper size for preview and PDF export. Defaults to A4. */
   pageSize?: PageSize;

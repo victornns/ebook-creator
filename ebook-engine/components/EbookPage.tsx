@@ -10,10 +10,12 @@ interface Props {
   showPageNumber: boolean;
   fullPage?: boolean;
   backgroundStyle?: React.CSSProperties;
+  /** SVG background node rendered below content. When provided, backgroundStyle is ignored. */
+  backgroundNode?: React.ReactNode;
   children: React.ReactNode;
 }
 
-export default function EbookPage({ layout, sectionId, pageNumber, showPageNumber, fullPage = false, backgroundStyle, children }: Props) {
+export default function EbookPage({ layout, sectionId, pageNumber, showPageNumber, fullPage = false, backgroundStyle, backgroundNode, children }: Props) {
   const pageStyle: React.CSSProperties = {
     position: "relative",
     width: `${layout.pageWidthMm}mm`,
@@ -22,13 +24,14 @@ export default function EbookPage({ layout, sectionId, pageNumber, showPageNumbe
     overflow: "hidden",
     backgroundColor: "var(--ebook-bg, #fff)",
     boxShadow: "0 4px 24px rgba(0,0,0,0.18)",
-    ...backgroundStyle,
+    ...(backgroundNode ? {} : backgroundStyle),
   };
 
   const contentStyle: React.CSSProperties = fullPage
-    ? { width: "100%", height: "100%" }
+    ? { position: "relative", zIndex: 1, width: "100%", height: "100%" }
     : {
         position: "absolute",
+        zIndex: 1,
         top: `${layout.marginTopMm}mm`,
         left: `${layout.marginLeftMm}mm`,
         right: `${layout.marginRightMm}mm`,
@@ -42,6 +45,7 @@ export default function EbookPage({ layout, sectionId, pageNumber, showPageNumbe
       id={sectionId}
       style={pageStyle}
     >
+      {backgroundNode}
       <div
         className={fullPage ? undefined : "ebook-page-blocks"}
         style={contentStyle}

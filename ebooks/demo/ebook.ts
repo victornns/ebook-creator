@@ -11,6 +11,7 @@ export const demoEbook: Ebook = {
     backgroundColor: "#1a3a2a",
     image: { src: imageCover, alt: "Living Green" },
     textColor: "#e8f5e9",
+    background: { variant: "corner-wave" },
   },
   sections: [
     // ── Introduction ─────────────────────────────────────────────────────────
@@ -57,6 +58,7 @@ export const demoEbook: Ebook = {
         description: "Exploring the foundations of environmental science and why every action we take leaves a mark on our shared home.",
         backgroundColor: "var(--ebook-secondary)",
         image: { src: imageCover, alt: "Understanding Our Planet" },
+        background: { variant: "layered" },
       },
     },
 
@@ -170,6 +172,7 @@ export const demoEbook: Ebook = {
         description: "Practical habits, frameworks, and tools to reduce your environmental footprint and live more intentionally.",
         backgroundColor: "var(--ebook-secondary)",
         image: { src: imageCover, alt: "Sustainable Practices" },
+        background: { variant: "split-wave" },
       },
     },
 
@@ -312,6 +315,7 @@ export const demoEbook: Ebook = {
         description: "From individual habits to collective movements — how to translate awareness into lasting, meaningful change.",
         backgroundColor: "var(--ebook-secondary)",
         image: { src: imageCover, alt: "Taking Action" },
+        background: { variant: "organic" },
       },
     },
 

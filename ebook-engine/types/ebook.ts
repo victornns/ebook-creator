@@ -1,4 +1,5 @@
 import type { EbookImage } from "./image";
+import type { BackgroundConfig } from "./background";
 
 export type { EbookImage, LocalImage, RemoteImage } from "./image";
 export { cdnImage, isRemoteImage, resolveNextImageProps } from "./image";
@@ -139,6 +140,8 @@ export interface ChapterCover {
   backgroundColor?: string;
   backgroundImage?: string;
   textColor?: string;
+  /** SVG decorative background. When set, overrides backgroundColor/backgroundImage. */
+  background?: BackgroundConfig;
 }
 
 export interface Section {
@@ -162,6 +165,8 @@ export interface EbookCover {
   };
   /** Text color for title, subtitle and author. Defaults to white. */
   textColor?: string;
+  /** SVG decorative background. When set, overrides backgroundColor/backgroundImage. */
+  background?: BackgroundConfig;
 }
 
 export interface Ebook {
