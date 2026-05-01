@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "export:pdf": "tsx export/generate-pdf.ts"
+    "export:pdf": "tsx export/generate-pdf.ts",
+    "export:pdf:all": "tsx export/generate-all-pdfs.ts"
   },
   "dependencies": {
     "next": "16.2.4",

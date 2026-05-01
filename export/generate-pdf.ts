@@ -16,7 +16,7 @@ async function resolveEbookPageDimensions(ebookId: string): Promise<{ width: num
   }
 }
 
-async function generatePDF(ebookId: string, baseUrl: string): Promise<void> {
+export async function generatePDF(ebookId: string, baseUrl: string): Promise<void> {
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
@@ -62,9 +62,12 @@ async function generatePDF(ebookId: string, baseUrl: string): Promise<void> {
   console.log(`✅ PDF gerado: ${outputPath}`);
 }
 
-const ebookId = process.argv[2];
-const baseUrl = process.argv[3] ?? "http://localhost:3000";
-generatePDF(ebookId, baseUrl).catch((err) => {
-  console.error("❌ Erro ao gerar PDF:", err);
-  process.exit(1);
-});
+// Only run when invoked directly, not when imported by generate-all-pdfs.ts
+if (process.argv[1]?.endsWith("generate-pdf.ts")) {
+  const ebookId = process.argv[2];
+  const baseUrl = process.argv[3] ?? "http://localhost:3000";
+  generatePDF(ebookId, baseUrl).catch((err) => {
+    console.error("❌ Erro ao gerar PDF:", err);
+    process.exit(1);
+  });
+}
