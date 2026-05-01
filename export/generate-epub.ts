@@ -115,9 +115,9 @@ function blockToXhtml(block: SerializedBlock, imageMap: Map<string, string>): st
       return `<div class="warning">${label}<p>${markdownToHtml(block.content ?? "")}</p></div>`;
     }
 
-    case "cta": {
+    case "action-box": {
       const label = block.label ? `<p class="callout-label">${esc(block.label)}</p>` : "";
-      return `<div class="cta">${label}<p>${esc(block.content ?? "")}</p></div>`;
+      return `<div class="action-box">${label}<p>${esc(block.content ?? "")}</p></div>`;
     }
 
     case "list":
@@ -300,7 +300,7 @@ blockquote.highlight {
 .note   { background: ${colors.accent}18; border-left: 4px solid ${colors.accent}; }
 .warning { background: #ff000018; border-left: 4px solid #cc3300; }
 
-.cta {
+.action-box {
   background: ${colors.primary};
   color: #fff;
   border-radius: 6px;
@@ -308,7 +308,7 @@ blockquote.highlight {
   margin: 1.2em 0;
   text-align: center;
 }
-.cta p { color: #fff; margin: 0; }
+.action-box p { color: #fff; margin: 0; }
 
 .callout-label {
   font-size: 0.72em;

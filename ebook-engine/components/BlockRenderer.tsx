@@ -3,7 +3,7 @@ import RichParagraph from "@/ebook-engine/components/renderers/RichParagraph";
 import ImageWithCaption from "@/ebook-engine/components/renderers/ImageWithCaption";
 import Highlight from "@/ebook-engine/components/renderers/Highlight";
 import Callout from "@/ebook-engine/components/renderers/Callout";
-import Cta from "@/ebook-engine/components/renderers/Cta";
+import ActionBox from "@/ebook-engine/components/renderers/ActionBox";
 import Table from "@/ebook-engine/components/renderers/Table";
 import Heading from "@/ebook-engine/components/renderers/Heading";
 import Quote from "@/ebook-engine/components/renderers/Quote";
@@ -28,8 +28,8 @@ export default function Block({ block }: { block: BlockType }) {
     case "warning":
       // Both share identical structure; Callout selects variant via block.type.
       return <Callout block={block} />;
-    case "cta":
-      return <Cta block={block} />;
+    case "action-box":
+      return <ActionBox block={block} />;
     case "table":
       return <Table block={block} />;
     case "heading":

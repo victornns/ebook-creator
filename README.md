@@ -119,7 +119,7 @@ export const theme = extendPreset(presets.corporate, {
 
 Available types:
 
-rich-paragraph, heading, quote, highlight, note, warning, cta, list, steps, table, code, image-with-caption, divider, page-break
+rich-paragraph, heading, quote, highlight, note, warning, action-box, list, steps, table, code, image-with-caption, divider, page-break
 
 ---
 

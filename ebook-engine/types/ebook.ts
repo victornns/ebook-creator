@@ -67,9 +67,9 @@ export interface WarningBlock extends BlockBase {
   content: string;
 }
 
-/** Call-to-action block for engagement (e.g. "try this", "share", "continue reading"). */
-export interface CtaBlock extends BlockBase {
-  type: "cta";
+/** Styled message box used to highlight an action or suggestion (e.g. "try this", "share", "next step"). */
+export interface ActionBoxBlock extends BlockBase {
+  type: "action-box";
   content: string;
   label?: string;
 }
@@ -134,7 +134,7 @@ export type Block =
   | HighlightBlock
   | NoteBlock
   | WarningBlock
-  | CtaBlock
+  | ActionBoxBlock
   | TableBlock
   // Structural / utility blocks
   | HeadingBlock

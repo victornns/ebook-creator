@@ -412,7 +412,7 @@
   color: color-mix(in srgb, #c0392b 80%, var(--ebook-text));
 }
 
-.ebook-cta {
+.ebook-action-box {
   background-color: var(--ebook-primary);
   color: #fff;
   border-radius: 0.5rem;
@@ -421,7 +421,7 @@
   text-align: center;
 }
 
-.ebook-cta-label {
+.ebook-action-box-label {
   font-size: 0.68rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -430,7 +430,7 @@
   margin: 0 0 0.5rem;
 }
 
-.ebook-cta-content {
+.ebook-action-box-content {
   margin: 0;
   font-family: var(--ebook-font-heading);
   font-size: 1.05rem;
