@@ -298,19 +298,4 @@ npx ts-node export/generate-pdf.ts my-ebook http://localhost:3001`,
       ],
     },
   ],
-
-  acknowledgements: {
-    id: "acknowledgements",
-    title: "Acknowledgements",
-    blocks: [
-      { type: "heading", level: 1, content: "About this Reference" },
-      {
-        type: "rich-paragraph",
-        content: "This document is auto-generated as part of the ebook engine test suite. Every block type is exercised at least once, with notes explaining intended usage.",
-      },
-      { type: "rich-paragraph", content: "When adding a new block type to the engine, add a corresponding section here so future developers have a working example to reference." },
-      { type: "divider" },
-      { type: "note", content: "Source: `ebooks/components-reference/ebook.ts`" },
-    ],
-  },
 };

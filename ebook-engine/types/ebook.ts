@@ -220,7 +220,5 @@ export interface Ebook {
   author: string;
   /** Optional cover page rendered as the very first page. */
   cover?: EbookCover;
-  /** Optional acknowledgements section rendered as the last page. */
-  acknowledgements?: Section;
   sections: Section[];
 }

@@ -873,13 +873,6 @@
   overflow: hidden;
 }
 
-/* ----- Acknowledgements ----- */
-
-/* transparent wrapper — inner .ebook-section handles the card appearance */
-.ebook-acknowledgements {
-  display: contents;
-}
-
 /* ===========================
    Print / PDF Styles
    =========================== */

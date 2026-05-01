@@ -30,7 +30,6 @@ export interface SerializedEbook {
   author: string;
   theme: Pick<EbookTheme, "colors" | "fonts">;
   sections: SerializedSection[];
-  acknowledgements?: SerializedSection;
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -79,7 +78,6 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     author: ebook.author,
     theme: { colors: theme.colors, fonts: theme.fonts },
     sections: ebook.sections.map(serializeSection),
-    acknowledgements: ebook.acknowledgements ? serializeSection(ebook.acknowledgements) : undefined,
   };
 
   return NextResponse.json(serialized);

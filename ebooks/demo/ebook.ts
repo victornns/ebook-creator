@@ -177,7 +177,6 @@ export const demoEbook: Ebook = {
           type: "list",
           items: ["Join or start a local sustainability group", "Advocate for green policies at the local council level", "Support businesses with strong environmental commitments", "Volunteer with reforestation or habitat restoration programmes"],
         },
-        { type: "page-break" },
         { type: "heading", level: 2, content: "Setting Targets" },
         {
           type: "steps",
@@ -189,15 +188,4 @@ export const demoEbook: Ebook = {
       ],
     },
   ],
-
-  acknowledgements: {
-    id: "acknowledgements",
-    title: "Acknowledgements",
-    blocks: [
-      { type: "heading", level: 1, content: "Acknowledgements" },
-      { type: "rich-paragraph", content: "This book would not exist without the scientists, activists, and everyday people quietly doing the work. Thank you." },
-      { type: "divider" },
-      { type: "note", content: "All emissions data sourced from Our World in Data and the IPCC Sixth Assessment Report (2021–2022)." },
-    ],
-  },
 };

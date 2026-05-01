@@ -234,7 +234,7 @@ export default function PaginatedEbookRenderer({ ebook, theme }: Props) {
   const mmRef = useRef<HTMLDivElement>(null);
 
   // All sections that have blocks to measure (chapter covers have no blocks)
-  const measurableSections = useMemo(() => [...ebook.sections, ...(ebook.acknowledgements ? [ebook.acknowledgements] : [])].filter((s) => !s.chapterCover), [ebook]);
+  const measurableSections = useMemo(() => ebook.sections.filter((s) => !s.chapterCover), [ebook]);
 
   useEffect(() => {
     const container = measureRef.current;

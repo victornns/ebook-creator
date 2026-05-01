@@ -60,7 +60,6 @@ interface SerializedEbook {
     fonts: { heading: string; body: string; mono?: string };
   };
   sections: SerializedSection[];
-  acknowledgements?: SerializedSection;
 }
 
 // ── Markdown → inline HTML (used by rich-paragraph, note, warning) ────────────
@@ -400,8 +399,8 @@ export async function generateEpub(ebookId: string, baseUrl: string): Promise<vo
 </container>`,
   );
 
-  // 3. Collect all sections (including acknowledgements)
-  const allSections: SerializedSection[] = [...ebook.sections, ...(ebook.acknowledgements ? [ebook.acknowledgements] : [])];
+  // 3. Collect all sections
+  const allSections: SerializedSection[] = [...ebook.sections];
 
   // 4. Download and embed images
   const imageMap = new Map<string, string>(); // original src → OEBPS path (e.g. "../images/img-0.png")
