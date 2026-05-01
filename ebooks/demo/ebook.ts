@@ -10,6 +10,7 @@ export const demoEbook: Ebook = {
   cover: {
     image: { src: imageCover, alt: "Living Green" },
     textColor: "#e8f5e9",
+    layout: "centered",
     background: { variant: "corner-wave" },
   },
   sections: [
@@ -35,6 +36,7 @@ export const demoEbook: Ebook = {
         chapterNumber: 1,
         description: "The science behind climate change and why the data demands urgent, collective action.",
         image: { src: imageCover, alt: "Understanding Our Planet" },
+        layout: "horizontal",
         background: { variant: "layered" },
       },
     },
@@ -113,6 +115,7 @@ export const demoEbook: Ebook = {
         chapterNumber: 2,
         description: "Practical habits and frameworks to reduce your environmental footprint, starting today.",
         image: { src: imageCover, alt: "Sustainable Practices" },
+        layout: "vertical",
         background: { variant: "split-wave" },
       },
     },
@@ -158,7 +161,7 @@ export const demoEbook: Ebook = {
       chapterCover: {
         chapterNumber: 3,
         description: "From individual habits to collective movements — how to translate awareness into lasting change.",
-        image: { src: imageCover, alt: "Taking Action" },
+        layout: "minimal",
         background: { variant: "organic" },
       },
     },

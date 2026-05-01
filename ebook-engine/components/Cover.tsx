@@ -24,14 +24,15 @@ export default function Cover({ title, subtitle, author, cover }: Props) {
       : { backgroundColor: cover.backgroundColor ?? "var(--ebook-primary)" };
 
   const textColor = cover.textColor ?? "#ffffff";
+  const layout = cover.layout ?? "horizontal";
 
   return (
     <div
-      className="ebook-cover"
+      className={`ebook-cover ebook-cover--${layout}`}
       style={backgroundStyle}
     >
-      <div className="ebook-cover-image-side">
-        {cover.image && (
+      {cover.image && (
+        <div className="ebook-cover-image-side">
           <Image
             {...resolveNextImageProps(cover.image.src)}
             alt={cover.image.alt}
@@ -39,8 +40,8 @@ export default function Cover({ title, subtitle, author, cover }: Props) {
             loading="eager"
             priority
           />
-        )}
-      </div>
+        </div>
+      )}
 
       <div
         className="ebook-cover-info-side"

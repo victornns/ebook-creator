@@ -526,6 +526,7 @@
   width: min(calc(var(--ebook-page-width-mm, 210) * 1mm), 100%);
   min-height: calc(var(--ebook-page-height-mm, 297) * 1mm);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
 }
 
 /* When inside a full-page EbookPage shell, the cover fills the entire page */
@@ -536,26 +537,22 @@
   box-shadow: none;
 }
 
+/* Base shared styles (typography and image) */
 .ebook-cover-image-side {
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem;
+  overflow: hidden;
 }
 
 .ebook-cover-image {
-  max-width: 100%;
-  max-height: 60vh;
+  display: block;
   object-fit: contain;
 }
 
 .ebook-cover-info-side {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 3rem 3rem 3rem 2rem;
 }
 
 .ebook-cover-title {
@@ -582,6 +579,116 @@
   margin: 0;
 }
 
+/* ── Layout: horizontal (default) — image left | text right ── */
+.ebook-cover--horizontal {
+  flex-direction: row;
+}
+
+.ebook-cover--horizontal .ebook-cover-image-side {
+  flex: 1;
+  padding: 3rem;
+}
+
+.ebook-cover--horizontal .ebook-cover-image {
+  max-width: 100%;
+  max-height: 60vh;
+}
+
+.ebook-cover--horizontal .ebook-cover-info-side {
+  flex: 1;
+  justify-content: center;
+  padding: 3rem 3rem 3rem 2rem;
+}
+
+/* ── Layout: centered — image thumbnail + text stacked and centered ── */
+.ebook-cover--centered {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.ebook-cover--centered .ebook-cover-image-side {
+  flex: none;
+  margin-bottom: 2.5rem;
+}
+
+.ebook-cover--centered .ebook-cover-image {
+  max-height: 28vh;
+  width: auto;
+  border-radius: 0.375rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.ebook-cover--centered .ebook-cover-info-side {
+  flex: none;
+  align-items: center;
+  padding: 0 4rem;
+}
+
+.ebook-cover--centered .ebook-cover-title {
+  font-size: 3rem;
+}
+
+.ebook-cover--centered .ebook-cover-author {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 1;
+}
+
+/* ── Layout: vertical — image fills top half, text fills bottom half ── */
+.ebook-cover--vertical {
+  flex-direction: column;
+}
+
+.ebook-cover--vertical .ebook-cover-image-side {
+  flex: 0 0 55%;
+}
+
+.ebook-cover--vertical .ebook-cover-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.ebook-cover--vertical .ebook-cover-info-side {
+  flex: 1;
+  justify-content: center;
+  padding: 2rem 3rem;
+}
+
+/* ── Layout: right — text column pinned to the right; relies on SVG background ── */
+.ebook-cover--right {
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.ebook-cover--right .ebook-cover-image-side {
+  display: none;
+}
+
+.ebook-cover--right .ebook-cover-info-side {
+  flex: 0 0 52%;
+  justify-content: flex-end;
+  padding: 4rem 3.5rem;
+  text-align: right;
+}
+
+.ebook-cover--right .ebook-cover-title {
+  font-size: 2.8rem;
+}
+
+.ebook-cover--right .ebook-cover-author {
+  margin-top: 3rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
 /* ----- TOC Page ----- */
 
 /*
@@ -601,26 +708,26 @@
 
 .ebook-chapter-cover {
   position: relative;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
 }
 
-.ebook-chapter-cover-content {
-  flex: 1;
+/* Base inner container — shared by all layouts */
+.ebook-chapter-cover-inner {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
 }
 
+/* Base element styles — typography shared across all layouts */
 .ebook-chapter-cover-number {
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  opacity: 0.6;
+  letter-spacing: 0.2em;
+  opacity: 0.7;
   margin-bottom: 1rem;
 }
 
@@ -639,20 +746,131 @@
   opacity: 0.75;
   margin: 0;
   line-height: 1.7;
-  max-width: 40ch;
 }
 
 .ebook-chapter-cover-image-side {
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .ebook-chapter-cover-image {
   max-width: 100%;
   max-height: 55vh;
   object-fit: contain;
+  display: block;
+}
+
+/* ── Layout: horizontal (default) — text left | image right ── */
+.ebook-chapter-cover-inner--horizontal {
+  flex-direction: row;
+  align-items: center;
+  padding: var(--ebook-spacing-page-padding);
+  gap: 2rem;
+}
+
+.ebook-chapter-cover-inner--horizontal .ebook-chapter-cover-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ebook-chapter-cover-inner--horizontal .ebook-chapter-cover-image-side {
+  flex: 1;
+}
+
+/* ── Layout: centered — all stacked and horizontally centered ── */
+.ebook-chapter-cover-inner--centered {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--ebook-spacing-page-padding);
+  gap: 2.5rem;
+}
+
+.ebook-chapter-cover-inner--centered .ebook-chapter-cover-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ebook-chapter-cover-inner--centered .ebook-chapter-cover-image-side {
+  order: -1;
+}
+
+.ebook-chapter-cover-inner--centered .ebook-chapter-cover-image {
+  max-height: 22vh;
+  border-radius: 0.25rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.ebook-chapter-cover-inner--centered .ebook-chapter-cover-description {
+  max-width: 48ch;
+}
+
+.ebook-chapter-cover-inner--centered .ebook-chapter-cover-title {
+  font-size: 2.8rem;
+}
+
+/* ── Layout: vertical — image fills top half, text fills bottom half ── */
+.ebook-chapter-cover-inner--vertical {
+  flex-direction: column;
+}
+
+.ebook-chapter-cover-inner--vertical .ebook-chapter-cover-image-side {
+  flex: 0 0 52%;
+  order: -1;
+  padding: 2.5rem;
+}
+
+.ebook-chapter-cover-inner--vertical .ebook-chapter-cover-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem var(--ebook-spacing-page-padding);
+}
+
+/* ── Layout: minimal — large watermark numeral + centered text, no image ── */
+.ebook-chapter-cover-inner--minimal {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--ebook-spacing-page-padding);
+}
+
+.ebook-chapter-cover-inner--minimal .ebook-chapter-cover-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.ebook-chapter-cover-inner--minimal .ebook-chapter-cover-title {
+  font-size: 2.8rem;
+}
+
+/* Large semi-transparent numeral behind "minimal" layout text */
+.ebook-chapter-cover-watermark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ebook-font-heading);
+  font-size: 22rem;
+  font-weight: 900;
+  color: currentColor;
+  opacity: 0.07;
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+  overflow: hidden;
 }
 
 /* ----- Acknowledgements ----- */

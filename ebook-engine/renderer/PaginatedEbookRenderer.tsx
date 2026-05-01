@@ -72,27 +72,27 @@ function resolvePageBackground(src: { background?: BackgroundConfig; backgroundI
 
 function renderChapterCoverContent(chapterCover: ChapterCoverType, sectionTitle: string) {
   const textColor = chapterCover.textColor ?? "#ffffff";
+  const layout = chapterCover.layout ?? "horizontal";
 
   return (
     <div
-      className="ebook-chapter-cover-inner"
-      style={{
-        display: "flex",
-        alignItems: "center",
-        width: "100%",
-        height: "100%",
-        padding: "var(--ebook-spacing-page-padding)",
-        gap: "2rem",
-        color: textColor,
-        boxSizing: "border-box",
-      }}
+      className={`ebook-chapter-cover-inner ebook-chapter-cover-inner--${layout}`}
+      style={{ color: textColor }}
     >
+      {layout === "minimal" && (
+        <div
+          className="ebook-chapter-cover-watermark"
+          aria-hidden="true"
+        >
+          {String(chapterCover.chapterNumber).padStart(2, "0")}
+        </div>
+      )}
       <div className="ebook-chapter-cover-content">
         <span className="ebook-chapter-cover-number">Capítulo {chapterCover.chapterNumber}</span>
         <h2 className="ebook-chapter-cover-title">{sectionTitle}</h2>
         {chapterCover.description && <p className="ebook-chapter-cover-description">{chapterCover.description}</p>}
       </div>
-      {chapterCover.image && (
+      {chapterCover.image && layout !== "minimal" && (
         <div className="ebook-chapter-cover-image-side">
           <Image
             {...resolveNextImageProps(chapterCover.image.src)}

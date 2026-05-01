@@ -1,6 +1,24 @@
 import type { EbookImage } from "./image";
 import type { BackgroundConfig } from "./background";
 
+/**
+ * Controls how text and image are arranged on the main cover page.
+ * - `"horizontal"` — image left, text right (default)
+ * - `"centered"` — image thumbnail + text stacked, all horizontally centered
+ * - `"vertical"` — image fills top half, text fills bottom half
+ * - `"right"` — text column pinned to the right; no image column (relies on SVG background)
+ */
+export type CoverLayout = "horizontal" | "centered" | "vertical" | "right";
+
+/**
+ * Controls how chapter number, title and image are arranged on chapter-cover pages.
+ * - `"horizontal"` — text left, image right (default)
+ * - `"centered"` — all stacked and horizontally centered; image above text
+ * - `"vertical"` — image fills top half, text fills bottom half
+ * - `"minimal"` — no image; large semi-transparent chapter numeral as watermark
+ */
+export type ChapterCoverLayout = "horizontal" | "centered" | "vertical" | "minimal";
+
 export type { EbookImage, LocalImage, RemoteImage } from "./image";
 export { cdnImage, isRemoteImage, resolveNextImageProps } from "./image";
 
@@ -137,6 +155,8 @@ export interface ChapterCover {
     src: EbookImage;
     alt: string;
   };
+  /** Layout disposition of text and image on the chapter-cover page. Defaults to `"horizontal"`. */
+  layout?: ChapterCoverLayout;
   /**
    * Solid color fallback. Used only when `background` (SVG variant) is not set.
    * Defaults to `var(--ebook-secondary)` from the theme.
@@ -166,6 +186,8 @@ export interface Section {
 }
 
 export interface EbookCover {
+  /** Layout disposition of text and image on the cover page. Defaults to `"horizontal"`. */
+  layout?: CoverLayout;
   /**
    * Image URL used as full-bleed background. Used only when `background` (SVG variant) is not set.
    * Takes precedence over `backgroundColor`.
