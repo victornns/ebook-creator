@@ -26,6 +26,8 @@ export interface EbookPage {
   showPageNumber: boolean;
 }
 
+// PaginationResult is produced once during the measure phase and then passed
+// to the renderer to produce the final list of EbookPage shells.
 export interface PaginationResult {
   pages: EbookPage[];
   /** Maps section id → page number of the first page of that section. */

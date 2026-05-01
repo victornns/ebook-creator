@@ -1,16 +1,13 @@
 import type { Ebook } from "@/ebook-engine/types/ebook";
 import type { EbookTheme } from "@/ebook-engine/types/theme";
-import { ebook, theme } from "./demo";
+import { demoEbook as ebook } from "./demo/ebook";
+import { theme } from "./demo/theme";
 
 export interface EbookEntry {
   ebook: Ebook;
   theme: EbookTheme;
 }
 
-/**
- * Registry of all available ebooks.
- * To add a new ebook, import its ebook and theme and add an entry here.
- */
 export const ebookRegistry: Record<string, EbookEntry> = {
   demo: { ebook, theme },
 };

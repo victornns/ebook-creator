@@ -1,9 +1,5 @@
 import type { HighlightBlock } from "@/ebook-engine/types/ebook";
 
-interface Props {
-  block: HighlightBlock;
-}
-
-export default function Highlight({ block }: Props) {
+export default function Highlight({ block }: { block: HighlightBlock }) {
   return <div className="ebook-highlight">{block.content}</div>;
 }

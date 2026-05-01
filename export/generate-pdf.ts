@@ -1,9 +1,8 @@
 import { chromium } from "playwright";
 import path from "path";
 import fs from "fs";
-import type { PageSize } from "@/ebook-engine/types/theme";
-import type { EbookTheme } from "@/ebook-engine/types/theme";
-import { resolvePageSize } from "@/ebook-engine/pagination/resolvePageSize";
+import type { PageSize, EbookTheme } from "@/ebook-engine/types/theme";
+import { resolvePageSize } from "@/ebook-engine/pagination/resolveLayout";
 
 /** Loads the theme for an ebook and returns its resolved page dimensions in mm. */
 async function resolveEbookPageDimensions(ebookId: string): Promise<{ width: number; height: number }> {

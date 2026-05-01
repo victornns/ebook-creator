@@ -3,8 +3,7 @@
 import type React from "react";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { Ebook } from "@/ebook-engine/types/ebook";
-import type { ChapterCover as ChapterCoverType } from "@/ebook-engine/types/ebook";
+import type { Ebook, ChapterCover as ChapterCoverType } from "@/ebook-engine/types/ebook";
 import type { EbookTheme } from "@/ebook-engine/types/theme";
 import type { EbookPage, PaginationResult } from "@/ebook-engine/pagination/paginateEbook";
 import type { MeasuredBlock } from "@/ebook-engine/pagination/paginateSection";
@@ -13,11 +12,18 @@ import { resolveLayout } from "@/ebook-engine/pagination/resolveLayout";
 import { paginateEbook } from "@/ebook-engine/pagination/paginateEbook";
 import { resolveNextImageProps } from "@/ebook-engine/types/image";
 import EbookPageShell from "@/ebook-engine/components/EbookPage";
-import Block from "@/ebook-engine/components/Block";
+import Block from "@/ebook-engine/components/BlockRenderer";
 import Cover from "@/ebook-engine/components/Cover";
 import TableOfContents from "@/ebook-engine/components/TableOfContents";
 
-// ── Google Fonts loader ───────────────────────────────────────────────────────
+// ── Rendering pipeline ───────────────────────────────────────────────────────
+// Rendering happens in two phases:
+//   1. Measure  — blocks are rendered off-screen at the real content width so
+//                 their pixel heights can be captured via getBoundingClientRect.
+//   2. Paginate — measured heights feed paginateEbook(), which returns a flat
+//                 ordered list of EbookPage objects (cover, TOC, content pages).
+//   3. Render   — each EbookPage is rendered inside a fixed-size EbookPage shell.
+// This avoids relying on a CSS print engine and gives pixel-accurate pagination.
 
 function useGoogleFonts(families: string[] | undefined) {
   useEffect(() => {
@@ -41,6 +47,10 @@ function useGoogleFonts(families: string[] | undefined) {
       link.remove();
     };
   }, [families]);
+}
+
+function resolveBackgroundStyle(src: { backgroundImage?: string; backgroundColor?: string }, defaultColor: string): React.CSSProperties {
+  return src.backgroundImage ? { backgroundImage: `url(${src.backgroundImage})`, backgroundSize: "cover", backgroundPosition: "center" } : { backgroundColor: src.backgroundColor ?? defaultColor };
 }
 
 // ── Page renderers ────────────────────────────────────────────────────────────
@@ -73,6 +83,8 @@ function renderChapterCoverContent(chapterCover: ChapterCoverType, sectionTitle:
             {...resolveNextImageProps(chapterCover.image.src)}
             alt={chapterCover.image.alt}
             className="ebook-chapter-cover-image"
+            loading="eager"
+            priority
           />
         </div>
       )}
@@ -87,13 +99,6 @@ function renderPage(page: EbookPage, layout: PageLayout, sectionPageMap: Record<
     case "cover": {
       const { coverData } = page;
       if (!coverData) return null;
-      const bg: React.CSSProperties = coverData.cover.backgroundImage
-        ? {
-            backgroundImage: `url(${coverData.cover.backgroundImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }
-        : { backgroundColor: coverData.cover.backgroundColor ?? "var(--ebook-primary)" };
       return (
         <EbookPageShell
           key={page.id}
@@ -101,7 +106,7 @@ function renderPage(page: EbookPage, layout: PageLayout, sectionPageMap: Record<
           pageNumber={page.pageNumber}
           showPageNumber={false}
           fullPage
-          backgroundStyle={bg}
+          backgroundStyle={resolveBackgroundStyle(coverData.cover, "var(--ebook-primary)")}
         >
           <Cover
             title={coverData.title}
@@ -131,13 +136,6 @@ function renderPage(page: EbookPage, layout: PageLayout, sectionPageMap: Record<
     case "chapter-cover": {
       const { chapterCover, sectionTitle } = page;
       if (!chapterCover) return null;
-      const bg: React.CSSProperties = chapterCover.backgroundImage
-        ? {
-            backgroundImage: `url(${chapterCover.backgroundImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }
-        : { backgroundColor: chapterCover.backgroundColor ?? "var(--ebook-secondary)" };
       return (
         <EbookPageShell
           key={page.id}
@@ -146,7 +144,7 @@ function renderPage(page: EbookPage, layout: PageLayout, sectionPageMap: Record<
           pageNumber={page.pageNumber}
           showPageNumber={page.showPageNumber}
           fullPage
-          backgroundStyle={bg}
+          backgroundStyle={resolveBackgroundStyle(chapterCover, "var(--ebook-secondary)")}
         >
           {renderChapterCoverContent(chapterCover, sectionTitle ?? "")}
         </EbookPageShell>

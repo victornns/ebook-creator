@@ -32,6 +32,8 @@ export default function Cover({ title, subtitle, author, cover }: Props) {
             {...resolveNextImageProps(cover.image.src)}
             alt={cover.image.alt}
             className="ebook-cover-image"
+            loading="eager"
+            priority
           />
         )}
       </div>
