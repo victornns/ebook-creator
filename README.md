@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ebook-creator
 
-## Getting Started
+Create and export ebooks using Next.js and TypeScript. Define content, themes, and layout in code, preview in the browser, and export to PDF and EPUB3.
 
-First, run the development server:
+Live demo:
+https://ebook-creator-demo.vercel.app/
+
+---
+
+## Usage
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 to see all ebooks.  
+Preview a specific ebook at http://localhost:3000/preview/{id}
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Export
 
-## Learn More
+Dev server must be running.
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run export:pdf
+npm run export:pdf:all
+npm run export:epub
+npm run export:epub:all
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Or export directly:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npx tsx export/generate-pdf.ts demo
+npx tsx export/generate-epub.ts demo
+```
 
-## Deploy on Vercel
+Output:
+public/output/{id}.pdf  
+public/output/{id}.epub
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Create a new ebook
+
+Structure:
+
+```
+ebooks/
+  my-ebook/
+    ├── ebook.ts
+    ├── theme.ts
+```
+
+Example:
+
+```ts
+export const myEbook = {
+  id: "my-ebook",
+  title: "Title",
+  author: "Author",
+  sections: [
+    {
+      id: "intro",
+      title: "Introduction",
+      blocks: [
+        { type: "heading", level: 1, content: "Chapter title" },
+        { type: "rich-paragraph", content: "Text content" },
+      ],
+    },
+  ],
+};
+```
+
+Register it:
+
+```ts
+export const ebookRegistry = {
+  "my-ebook": { ebook: myEbook, theme },
+};
+```
+
+---
+
+## Blocks
+
+Available types:
+
+rich-paragraph, heading, quote, highlight, note, warning, cta, list, steps, table, code, image-with-caption, divider, page-break
+
+---
+
+## Goal
+
+Build structured ebooks with full control over content, layout, and export, without relying on visual editors.
