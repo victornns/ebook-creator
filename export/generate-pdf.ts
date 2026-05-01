@@ -36,7 +36,7 @@ async function generatePDF(ebookId: string, baseUrl: string): Promise<void> {
   // Wait for the JS pagination engine to finish measuring and laying out pages
   await page.waitForSelector("[data-pagination-ready='true']", { timeout: 30_000 });
 
-  const outputDir = path.join(process.cwd(), "output");
+  const outputDir = path.join(process.cwd(), "public", "output");
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }
