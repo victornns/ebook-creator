@@ -5,7 +5,7 @@ import imageContent from "./assets/sample-image.jpg";
 export const demoEbook: Ebook = {
   id: "demo",
   title: "Demo",
-  subtitle: "A practical guide to sustainability, conscious living, and building a better future for our planet",
+  subtitle: "A practical guide to sustainability and building a better future for our planet",
   author: "Demo Author",
   cover: {
     image: { src: imageCover, alt: "Living Green" },
@@ -14,7 +14,7 @@ export const demoEbook: Ebook = {
     background: { variant: "corner-wave" },
   },
   sections: [
-    // ── Introduction — SHORT (fits ~1 page) ───────────────────────────────────
+    // ── Introduction ────────────────────────────────────────────────────────
     {
       id: "introduction",
       title: "Introduction",
@@ -24,6 +24,15 @@ export const demoEbook: Ebook = {
         { type: "quote", content: "The Earth does not belong to us. We belong to the Earth. — Chief Seattle" },
         { type: "list", items: ["Understand the systems you are part of", "Reduce before you offset", "Act in community, not just individually", "Measure, learn, and adapt continuously"] },
         { type: "note", content: "Each chapter builds on the previous one. Feel free to jump to the section most relevant to your life right now." },
+        {
+          type: "rich-paragraph",
+          content:
+            "The scale of transformation needed is not incremental — it requires rethinking the foundations of how we produce, consume, and discard. Fortunately, the tools, knowledge, and alternatives already exist. What remains is the collective will to apply them consistently. History shows that societies are capable of rapid change when they recognise the urgency of a challenge. The transition to renewable energy has accelerated faster than nearly every major forecast from a decade ago, proving that momentum, once established, is difficult to stop.",
+        },
+        {
+          type: "rich-paragraph",
+          content: "The path forward is not about perfection — it is about persistence. Small, consistent actions compound over time in the same way that small.",
+        },
       ],
     },
 
@@ -41,7 +50,6 @@ export const demoEbook: Ebook = {
       },
     },
 
-    // SHORT — fits ~1 page
     {
       id: "the-living-system",
       title: "The Living System",
@@ -50,10 +58,14 @@ export const demoEbook: Ebook = {
         { type: "rich-paragraph", content: "Earth's biosphere is a single interconnected system. Every species, river, and soil microbe plays a role. When one part is disrupted, ripple effects reach the entire web of life." },
         { type: "highlight", content: "Roughly 80% of Earth's biodiversity exists in tropical rainforests, which cover less than 6% of the planet's surface." },
         { type: "image-with-caption", src: imageContent, alt: "Green forest and natural ecosystem", caption: "Tropical forests are home to more than half of the world's terrestrial species." },
+        {
+          type: "rich-paragraph",
+          content:
+            "The rate at which species are disappearing today is estimated to be between 100 and 1,000 times higher than the natural background extinction rate. Habitat loss, driven primarily by agriculture, logging, and urban expansion, is the leading cause. When we protect a forest, we are not simply preserving trees — we are safeguarding the carbon stores, freshwater cycles, and genetic diversity that underpin the stability of the entire planet. Conservation is not a luxury; it is infrastructure for the long-term survival of human civilisation as we know it.",
+        },
       ],
     },
 
-    // LONG — spans 3+ pages
     {
       id: "climate-data",
       title: "Climate Data",
@@ -74,6 +86,8 @@ export const demoEbook: Ebook = {
           ],
         },
         { type: "warning", label: "Tipping points", content: "Scientists have identified at least 16 climate tipping points — thresholds beyond which changes become self-sustaining and largely irreversible. We have likely already crossed five." },
+        { type: "quote", content: "We are the first generation to feel the impact of climate change and the last generation that can do something about it. — Barack Obama" },
+        { type: "page-break" },
         { type: "heading", level: 2, content: "Observed Changes Since 1850" },
         {
           type: "item-list",
@@ -101,8 +115,6 @@ export const demoEbook: Ebook = {
     console.log(totals.filter((r) => r.country === "World"));
   });`,
         },
-        { type: "quote", content: "We are the first generation to feel the impact of climate change and the last generation that can do something about it. — Barack Obama" },
-        { type: "rich-paragraph", content: "The data is freely available. The challenge is no longer awareness — it is translating knowledge into sustained, structural change at every level of society." },
       ],
     },
 
@@ -120,7 +132,6 @@ export const demoEbook: Ebook = {
       },
     },
 
-    // MEDIUM — spans ~2 pages
     {
       id: "conscious-consumption",
       title: "Conscious Consumption",
@@ -150,6 +161,7 @@ export const demoEbook: Ebook = {
         { type: "image-with-caption", src: imageContent, alt: "Renewable energy and sustainable home", caption: "Rooftop solar combined with a home battery can eliminate grid dependence during daylight hours." },
         { type: "divider" },
         { type: "highlight", content: "A single reusable water bottle can replace over 1,000 single-use plastic bottles across its lifetime." },
+        { type: "action-box", label: "Your next step", content: "Share one insight from this book with someone you care about. Small conversations are how big movements begin." },
       ],
     },
 
@@ -166,7 +178,6 @@ export const demoEbook: Ebook = {
       },
     },
 
-    // SHORT — fits ~1 page
     {
       id: "community-action",
       title: "Community Action",
@@ -175,7 +186,7 @@ export const demoEbook: Ebook = {
         { type: "rich-paragraph", content: "Individual action is amplified when it happens in community. Research shows that social context multiplies the impact of personal behaviour change by a factor of 3 to 7." },
         {
           type: "list",
-          items: ["Join or start a local sustainability group", "Advocate for green policies at the local council level", "Support businesses with strong environmental commitments", "Volunteer with reforestation or habitat restoration programmes"],
+          items: ["Join or start a local sustainability group", "Advocate for green policies at the local council level"],
         },
         { type: "heading", level: 2, content: "Setting Targets" },
         {
@@ -184,7 +195,25 @@ export const demoEbook: Ebook = {
           items: ["Calculate your current baseline footprint using a reputable online calculator.", "Identify your three highest-impact categories.", "Set a 12-month reduction target for each — aim for 10–20%.", "Log progress monthly and adjust every six months."],
         },
         { type: "quote", content: "We do not need a handful of people doing sustainability perfectly. We need millions doing it imperfectly. — Anne-Marie Bonneau" },
-        { type: "cta", label: "Your next step", content: "Share one insight from this book with someone you care about. Small conversations are how big movements begin." },
+      ],
+    },
+
+    // ── Acknowledgements ─────────────────────────────────────────────────────
+    {
+      id: "acknowledgements",
+      title: "Acknowledgements",
+      blocks: [
+        { type: "heading", level: 1, content: "Acknowledgements" },
+        {
+          type: "rich-paragraph",
+          content: "This book would not exist without the scientists, researchers, and activists who have dedicated their lives to understanding and protecting our planet. Their work is the foundation everything here is built upon.",
+        },
+        { type: "divider" },
+        {
+          type: "rich-paragraph",
+          content: "Thank you to every reader who chose to engage seriously with these ideas. Awareness is the first step, and by picking up this book you have already taken it.",
+        },
+        { type: "note", content: "Emissions data sourced from Our World in Data and the IPCC Sixth Assessment Report (2021–2022). Biodiversity figures from WWF Living Planet Report 2022." },
       ],
     },
   ],

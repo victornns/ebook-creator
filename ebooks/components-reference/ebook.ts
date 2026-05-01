@@ -231,7 +231,7 @@ npx ts-node export/generate-pdf.ts my-ebook http://localhost:3001`,
             ["quote", "Content", "No", "Left-bordered blockquote"],
             ["note", "Callout", "Yes", "Optional label"],
             ["warning", "Callout", "Yes", "Optional label"],
-            ["cta", "Content", "No", "Optional label"],
+            ["action-box", "Content", "No", "Optional label"],
             ["list", "Structure", "No", "Bulleted list"],
             ["item-list", "Structure", "No", "2-col grid with dots"],
             ["steps", "Structure", "No", "Numbered sequence"],
@@ -245,26 +245,26 @@ npx ts-node export/generate-pdf.ts my-ebook http://localhost:3001`,
       ],
     },
 
-    // ── 6. CTA & Utility ──────────────────────────────────────────────────────
+    // ── 6. Action Box & Utility ───────────────────────────────────────────────
     {
-      id: "cta-and-utility",
-      title: "CTA & Utility",
+      id: "action-box-and-utility",
+      title: "Action Box & Utility",
       blocks: [
-        { type: "heading", level: 1, content: "CTA & Utility Blocks" },
+        { type: "heading", level: 1, content: "Action Box & Utility Blocks" },
 
-        { type: "heading", level: 2, content: "Call to Action" },
+        { type: "heading", level: 2, content: "Action Box" },
         {
           type: "rich-paragraph",
-          content: "The `cta` block is a dark, centered card used to prompt the reader to take an action — subscribe, download, try something, or share. It supports an optional `label` above the main message.",
+          content: "The `action-box` block is a dark, centered message card used to highlight an action or suggestion — such as a next step, a share prompt, or a key takeaway. It supports an optional `label` above the main message.",
         },
-        { type: "cta", content: "Start building your first ebook today." },
+        { type: "action-box", content: "Start building your first ebook today." },
         {
-          type: "cta",
+          type: "action-box",
           label: "Next step",
           content: "Copy the `components-reference` ebook as your starting template and replace the content.",
         },
         {
-          type: "cta",
+          type: "action-box",
           label: "Share this",
           content: "If this reference helped you, share it with someone who is building content tools.",
         },
