@@ -342,7 +342,7 @@ export default function PaginatedEbookRenderer({ ebook, theme }: Props) {
       )}
 
       {/* Rendered pages (visible after pagination is complete) */}
-      {phase === "ready" && result.pages.map((page) => renderPage(page, layout, result.sectionPageMap, theme.background?.variant))}
+      {phase === "ready" && result.pages.map((page) => renderPage(page, layout, result.sectionPageMap, theme.background))}
     </div>
   );
 }

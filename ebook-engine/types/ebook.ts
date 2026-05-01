@@ -137,10 +137,23 @@ export interface ChapterCover {
     src: EbookImage;
     alt: string;
   };
+  /**
+   * Solid color fallback. Used only when `background` (SVG variant) is not set.
+   * Defaults to `var(--ebook-secondary)` from the theme.
+   */
   backgroundColor?: string;
+  /**
+   * Image URL used as full-bleed background. Used only when `background` (SVG variant) is not set.
+   * Takes precedence over `backgroundColor`.
+   */
   backgroundImage?: string;
+  /** Text color for chapter number, title and description. Defaults to white. */
   textColor?: string;
-  /** SVG decorative background. When set, overrides backgroundColor/backgroundImage. */
+  /**
+   * SVG decorative background variant.
+   * When set, takes full precedence — `backgroundColor` and `backgroundImage` are ignored.
+   * Colors are inherited from the theme. Override per-page via `colors`.
+   */
   background?: BackgroundConfig;
 }
 
@@ -153,19 +166,28 @@ export interface Section {
 }
 
 export interface EbookCover {
-  /** URL of a background image. If omitted, uses backgroundColor. */
+  /**
+   * Image URL used as full-bleed background. Used only when `background` (SVG variant) is not set.
+   * Takes precedence over `backgroundColor`.
+   */
   backgroundImage?: string;
-  /** Solid color background. Defaults to the theme primary color (--ebook-primary). */
+  /**
+   * Solid color fallback. Used only when `background` (SVG variant) is not set.
+   * Defaults to `var(--ebook-primary)` from the theme.
+   */
   backgroundColor?: string;
-  /** Optional centered image on the left side of the cover.
-   *  Use a static import or `cdnImage()` — see `EbookImage`. */
+  /** Optional image displayed inside the cover layout (not the page background). */
   image?: {
     src: EbookImage;
     alt: string;
   };
   /** Text color for title, subtitle and author. Defaults to white. */
   textColor?: string;
-  /** SVG decorative background. When set, overrides backgroundColor/backgroundImage. */
+  /**
+   * SVG decorative background variant.
+   * When set, takes full precedence — `backgroundColor` and `backgroundImage` are ignored.
+   * Colors are inherited from the theme. Override per-page via `colors`.
+   */
   background?: BackgroundConfig;
 }
 

@@ -37,12 +37,13 @@ export interface EbookTheme {
     pagePadding: string;
   };
   /**
-   * Default SVG background applied to cover and chapter-cover pages.
-   * Individual pages can override this via their own `background` field.
+   * Default SVG background variant applied to cover and chapter-cover pages.
+   * Colors are driven automatically by `theme.colors` (primary, secondary, accent).
+   * Individual pages can override or disable this via their own `background` field.
+   *
+   * Available variants: "wave-cover" | "split-wave" | "organic" | "diagonal" | "layered" | "corner-wave"
    */
-  background?: {
-    variant?: BackgroundVariant;
-  };
+  background?: BackgroundVariant;
   /** Paper size for preview and PDF export. Defaults to A4. */
   pageSize?: PageSize;
   /**
