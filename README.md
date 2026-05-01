@@ -84,6 +84,37 @@ export const ebookRegistry = {
 
 ---
 
+## Theme presets
+
+Predefined themes for common use cases, available in `ebook-engine/presets.ts`.
+
+| Preset | Style |
+|---|---|
+| `minimal` | Clean, editorial |
+| `corporate` | Formal, structured |
+| `modern` | Expressive, balanced |
+| `documentation` | Technical, high clarity |
+
+Use a preset:
+
+```ts
+import { presets } from "@/ebook-engine/presets";
+
+export const theme = presets.corporate;
+```
+
+Override fields:
+
+```ts
+import { presets, extendPreset } from "@/ebook-engine/presets";
+
+export const theme = extendPreset(presets.corporate, {
+  colors: { accent: "#e63946" },
+});
+```
+
+---
+
 ## Blocks
 
 Available types:
