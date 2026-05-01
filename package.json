@@ -8,9 +8,12 @@
     "start": "next start",
     "lint": "eslint",
     "export:pdf": "tsx export/generate-pdf.ts",
-    "export:pdf:all": "tsx export/generate-all-pdfs.ts"
+    "export:pdf:all": "tsx export/generate-all-pdfs.ts",
+    "export:epub": "tsx export/generate-epub.ts",
+    "export:epub:all": "tsx export/generate-all-epubs.ts"
   },
   "dependencies": {
+    "jszip": "^3.10.1",
     "next": "16.2.4",
     "react": "19.2.4",
     "react-dom": "19.2.4",
@@ -19,6 +22,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/jszip": "^3.4.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
