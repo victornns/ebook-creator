@@ -24,17 +24,19 @@ Preview a specific ebook at http://localhost:3000/preview/{id}
 Dev server must be running.
 
 ```bash
-npm run export:pdf
+# Export a specific ebook
+npm run export:pdf demo
+npm run export:epub demo
+
+# Export all ebooks
 npm run export:pdf:all
-npm run export:epub
 npm run export:epub:all
 ```
 
-Or export directly:
+A custom host can be passed as a second argument (default: `http://localhost:3000`):
 
 ```bash
-npx tsx export/generate-pdf.ts demo
-npx tsx export/generate-epub.ts demo
+npm run export:pdf demo http://localhost:4000
 ```
 
 Output:
@@ -115,11 +117,25 @@ export const theme = extendPreset(presets.corporate, {
 
 ---
 
-## Blocks
+## Content blocks
 
-Available types:
-
-rich-paragraph, heading, quote, highlight, note, warning, action-box, list, steps, table, code, image-with-caption, divider, page-break
+| Type | Description |
+|---|---|
+| `rich-paragraph` | Body text with inline Markdown (**bold**, *italic*, `code`, links) |
+| `heading` | Section title, levels 1–3 |
+| `quote` | Styled pull quote |
+| `highlight` | Short emphasized phrase or key takeaway |
+| `note` | Tip or contextual explanation |
+| `warning` | Critical or cautionary message |
+| `action-box` | Highlighted call-to-action box |
+| `list` | Bullet list |
+| `item-list` | Labeled list with richer item styling |
+| `steps` | Numbered step-by-step sequence |
+| `table` | Tabular data with headers |
+| `code` | Monospace code block |
+| `image-with-caption` | Image with optional caption |
+| `divider` | Visual separator |
+| `page-break` | Forces a new page |
 
 ---
 
