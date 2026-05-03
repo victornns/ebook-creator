@@ -22,25 +22,16 @@ export type ChapterCoverLayout = "horizontal" | "centered" | "vertical" | "minim
 export type { EbookImage, LocalImage, RemoteImage } from "./image";
 export { cdnImage, isRemoteImage, resolveNextImageProps } from "./image";
 
-// ── Block base ───────────────────────────────────────────────────────────────
-
-interface BlockBase {
-  /** Force a page break before this block. */
-  breakBefore?: boolean;
-  /** Force a page break after this block. */
-  breakAfter?: boolean;
-}
-
 // ── Content blocks (visual / presentational) ─────────────────────────────────
 
 /** Body text with inline Markdown support: **bold**, *italic*, `code`, [text](url). */
-export interface RichParagraphBlock extends BlockBase {
+export interface RichParagraphBlock {
   type: "rich-paragraph";
   content: string;
 }
 
 /** Image with an optional caption. Rendered as an atomic unit (avoids page splits). */
-export interface ImageWithCaptionBlock extends BlockBase {
+export interface ImageWithCaptionBlock {
   type: "image-with-caption";
   src: EbookImage;
   alt: string;
@@ -48,34 +39,34 @@ export interface ImageWithCaptionBlock extends BlockBase {
 }
 
 /** Short, visually emphasized text. Used for key phrases or important takeaways. */
-export interface HighlightBlock extends BlockBase {
+export interface HighlightBlock {
   type: "highlight";
   content: string;
 }
 
 /** Informational block for tips, observations, or contextual explanations. */
-export interface NoteBlock extends BlockBase {
+export interface NoteBlock {
   type: "note";
   label?: string;
   content: string;
 }
 
 /** Critical or cautionary message. Styled to stand out more than a note. */
-export interface WarningBlock extends BlockBase {
+export interface WarningBlock {
   type: "warning";
   label?: string;
   content: string;
 }
 
 /** Styled message box used to highlight an action or suggestion (e.g. "try this", "share", "next step"). */
-export interface ActionBoxBlock extends BlockBase {
+export interface ActionBoxBlock {
   type: "action-box";
   content: string;
   label?: string;
 }
 
 /** Structured tabular data. */
-export interface TableBlock extends BlockBase {
+export interface TableBlock {
   type: "table";
   headers: string[];
   rows: string[][];
@@ -84,44 +75,44 @@ export interface TableBlock extends BlockBase {
 
 // ── Structural / utility blocks ──────────────────────────────────────────────
 
-export interface HeadingBlock extends BlockBase {
+export interface HeadingBlock {
   type: "heading";
   content: string;
   level?: 1 | 2 | 3;
 }
 
-export interface QuoteBlock extends BlockBase {
+export interface QuoteBlock {
   type: "quote";
   content: string;
 }
 
-export interface ListBlock extends BlockBase {
+export interface ListBlock {
   type: "list";
   items: string[];
 }
 
-export interface DividerBlock extends BlockBase {
+export interface DividerBlock {
   type: "divider";
 }
 
-export interface CodeBlock extends BlockBase {
+export interface CodeBlock {
   type: "code";
   content: string;
 }
 
-export interface ItemListBlock extends BlockBase {
+export interface ItemListBlock {
   type: "item-list";
   label?: string;
   items: string[];
 }
 
-export interface StepsBlock extends BlockBase {
+export interface StepsBlock {
   type: "steps";
   label?: string;
   items: string[];
 }
 
-export interface PageBreakBlock extends BlockBase {
+export interface PageBreakBlock {
   type: "page-break";
 }
 

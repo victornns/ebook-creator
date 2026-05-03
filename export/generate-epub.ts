@@ -38,8 +38,6 @@ interface SerializedBlock {
   caption?: string;
   src?: SerializedImage;
   alt?: string;
-  breakBefore?: boolean;
-  breakAfter?: boolean;
 }
 
 interface SerializedSection {

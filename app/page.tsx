@@ -5,36 +5,38 @@ export default function Home() {
   const ebooks = Object.entries(ebookRegistry);
 
   return (
-    <main className="min-h-screen bg-white">
-      <div className="max-w-2xl mx-auto px-6 py-20">
+    <main className="min-h-screen bg-amber-50">
+      <div className="max-w-2xl mx-auto px-6 py-24">
         {/* Header */}
-        <div className="mb-14">
-          <span className="text-xs font-semibold tracking-widest uppercase text-zinc-400">Ebook Creator</span>
-          <h1 className="mt-3 text-3xl font-bold tracking-tight text-zinc-900">Create e-books by code.</h1>
-          <p className="mt-4 text-zinc-500 leading-relaxed text-sm max-w-lg">Type your content, apply a theme, export to PDF/EPUB — simple and scalable.</p>
+        <div className="mb-12">
+          <span className="text-xs font-semibold tracking-widest uppercase text-amber-700/60">Ebook Creator</span>
+          <h1 className="mt-4 text-4xl font-bold tracking-tight text-stone-800 leading-tight">Create e-books by code.</h1>
+          <p className="mt-4 text-stone-500 leading-relaxed">Define content and theme in TypeScript, preview in the browser, export to PDF/EPUB.</p>
         </div>
 
         {/* Ebook list */}
-        <ul className="space-y-3">
+        <ul className="space-y-4">
           {ebooks.map(([id, entry]) => (
             <li
               key={id}
-              className="bg-white border border-zinc-200 rounded-xl p-5"
+              className="bg-white border rounded-lg p-6 border-amber-100 shadow-md shadow-amber-100"
             >
-              <p className="font-semibold text-zinc-900">{entry.ebook.title}</p>
-              {entry.ebook.subtitle && <p className="text-zinc-500 text-sm mt-0.5 leading-snug">{entry.ebook.subtitle}</p>}
-              <p className="text-zinc-400 text-xs mt-1">by {entry.ebook.author}</p>
+              <div className="min-w-0">
+                <p className="font-semibold text-stone-800 text-lg leading-snug">{entry.ebook.title}</p>
+                {entry.ebook.subtitle && <p className="text-stone-500 mt-1 leading-snug">{entry.ebook.subtitle}</p>}
+                <p className="text-stone-400 text-sm mt-2">by {entry.ebook.author}</p>
+              </div>
 
-              <div className="flex gap-3 mt-4">
+              <div className="flex gap-2 mt-5">
                 <Link
                   href={`/preview/${id}`}
-                  className="text-xs font-medium px-3 py-1.5 rounded-md bg-zinc-900 text-white hover:opacity-80 transition-opacity"
+                  className="text-sm font-medium px-4 py-2 rounded-lg bg-amber-800 text-amber-50 hover:bg-amber-700 transition-colors"
                 >
                   Preview
                 </Link>
                 <Link
                   href={`/output/${id}.pdf`}
-                  className="text-xs font-medium px-3 py-1.5 rounded-md border border-zinc-200 text-zinc-600 hover:border-zinc-400 transition-colors"
+                  className="text-sm font-medium px-4 py-2 rounded-lg border border-amber-800 text-amber-900 hover:bg-amber-50 transition-colors"
                   target="_blank"
                 >
                   View PDF

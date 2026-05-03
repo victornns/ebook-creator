@@ -1,6 +1,6 @@
 import type { Ebook } from "@/ebook-engine/types/ebook";
 import imageCover from "./assets/cover-image.png";
-import imageContent from "./assets/sample-image.png";
+import imageContent from "./assets/sample-image.jpg";
 
 export const componentsReferenceEbook: Ebook = {
   id: "components-reference",
@@ -48,7 +48,8 @@ export const componentsReferenceEbook: Ebook = {
         },
 
         // ── Headings ──
-        { type: "heading", level: 1, content: "Heading Level 1", breakBefore: true },
+        { type: "page-break" },
+        { type: "heading", level: 1, content: "Heading Level 1" },
         { type: "rich-paragraph", content: "Level 1 is the main section title. Use it once per section, at the very top." },
         { type: "heading", level: 2, content: "Heading Level 2" },
         { type: "rich-paragraph", content: "Level 2 introduces a subsection within a section. It may appear multiple times per page." },
@@ -117,7 +118,8 @@ export const componentsReferenceEbook: Ebook = {
           items: ["Two-column grid layout", "Accent dot per item", "Optional label above", "Best for short entries", "Handles odd counts gracefully", "Great for feature lists", "Works well for specs", "Clean visual rhythm"],
         },
 
-        { type: "heading", level: 2, content: "Numbered Steps", breakBefore: true },
+        { type: "page-break" },
+        { type: "heading", level: 2, content: "Numbered Steps" },
         {
           type: "rich-paragraph",
           content: "The `steps` block renders a numbered sequence with large, accent-coloured numerals. Use it when order matters — installation instructions, workflows, recipes, or any sequential process.",
@@ -130,7 +132,7 @@ export const componentsReferenceEbook: Ebook = {
             "Add `ebook.ts` exporting your `Ebook` object and `theme.ts` exporting your `EbookTheme`.",
             "Register the entry in `ebooks/index.ts` inside `ebookRegistry`.",
             "Open `/preview/your-ebook-id` in the browser to see the result.",
-            "Run `npx ts-node export/generate-pdf.ts your-ebook-id` to export a PDF.",
+            "Run `npm run export:pdf your-ebook-id` to export a PDF.",
           ],
         },
       ],
@@ -206,14 +208,6 @@ export const myEbook: Ebook = {
   ],
 };`,
         },
-        {
-          type: "code",
-          content: `# Generate a PDF
-npx ts-node export/generate-pdf.ts my-ebook
-
-# With a custom base URL
-npx ts-node export/generate-pdf.ts my-ebook http://localhost:3001`,
-        },
 
         { type: "heading", level: 2, content: "Table" },
         {
@@ -269,7 +263,8 @@ npx ts-node export/generate-pdf.ts my-ebook http://localhost:3001`,
           content: "If this reference helped you, share it with someone who is building content tools.",
         },
 
-        { type: "heading", level: 2, content: "Divider", breakBefore: true },
+        { type: "page-break" },
+        { type: "heading", level: 2, content: "Divider" },
         { type: "rich-paragraph", content: "The `divider` block renders a subtle horizontal rule. Use it to visually separate unrelated groups of blocks within the same section." },
         { type: "divider" },
         { type: "rich-paragraph", content: "Content below the divider continues in the same section but signals a thematic break to the reader." },
@@ -281,20 +276,6 @@ npx ts-node export/generate-pdf.ts my-ebook http://localhost:3001`,
           content: "The `page-break` block forces the pagination engine to start a new page at that exact point, regardless of how much space remains. The content below continues on the next page.",
         },
         { type: "rich-paragraph", content: "This paragraph is on the current page. The next paragraph will appear on a new page because a `page-break` follows." },
-        { type: "page-break" },
-        { type: "heading", level: 2, content: "After the Page Break" },
-        { type: "rich-paragraph", content: "This content starts on a fresh page, forced by the `page-break` block above. Use this sparingly — the pagination engine handles most breaks automatically." },
-
-        { type: "heading", level: 2, content: "breakBefore / breakAfter" },
-        {
-          type: "rich-paragraph",
-          content: "Any block can accept `breakBefore: true` or `breakAfter: true` in its definition to force a page boundary before or after it. This is a cleaner alternative to inserting a standalone `page-break` block.",
-        },
-        {
-          type: "note",
-          label: "Example",
-          content: "Setting `breakBefore: true` on a `heading` block guarantees that heading always opens a fresh page — useful for major sections that should never start mid-page.",
-        },
       ],
     },
   ],
