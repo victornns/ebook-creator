@@ -119,6 +119,8 @@ export const theme = extendPreset(presets.corporate, {
 
 ## Content blocks
 
+All text fields across all block types support Markdown formatting: **bold**, *italic*, `code`, [links](url), and ~~strikethrough~~. Block-level blocks (`rich-paragraph`, `quote`, `highlight`, `note`, `warning`, `action-box`) support full Markdown. Inline contexts (`heading`, list items, table cells, captions) render inline Markdown only.
+
 | Type | Description |
 |---|---|
 | `rich-paragraph` | Body text with inline Markdown (**bold**, *italic*, `code`, links) |

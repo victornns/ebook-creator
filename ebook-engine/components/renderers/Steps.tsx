@@ -1,3 +1,4 @@
+import MdInline from "@/ebook-engine/components/MdInline";
 import type { StepsBlock } from "@/ebook-engine/types/ebook";
 
 export default function Steps({ block }: { block: StepsBlock }) {
@@ -6,7 +7,9 @@ export default function Steps({ block }: { block: StepsBlock }) {
       <p className="ebook-recipe-label">{block.label ?? "Steps"}</p>
       <ol className="ebook-steps-list">
         {block.items.map((item, i) => (
-          <li key={i}>{item}</li>
+          <li key={i}>
+            <MdInline>{item}</MdInline>
+          </li>
         ))}
       </ol>
     </div>

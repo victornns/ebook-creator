@@ -1,4 +1,5 @@
 import Image from "next/image";
+import MdInline from "@/ebook-engine/components/MdInline";
 import type { ImageWithCaptionBlock } from "@/ebook-engine/types/ebook";
 import { resolveNextImageProps } from "@/ebook-engine/types/image";
 
@@ -15,7 +16,11 @@ export default function ImageWithCaption({ block }: Props) {
         className="ebook-image"
         loading="eager"
       />
-      {block.caption && <figcaption className="ebook-image-caption">{block.caption}</figcaption>}
+      {block.caption && (
+        <figcaption className="ebook-image-caption">
+          <MdInline>{block.caption}</MdInline>
+        </figcaption>
+      )}
     </figure>
   );
 }

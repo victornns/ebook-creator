@@ -1,3 +1,4 @@
+import MdInline from "@/ebook-engine/components/MdInline";
 import type { TableBlock } from "@/ebook-engine/types/ebook";
 
 interface Props {
@@ -15,7 +16,7 @@ export default function Table({ block }: Props) {
                 key={i}
                 className="ebook-table-th"
               >
-                {header}
+                <MdInline>{header}</MdInline>
               </th>
             ))}
           </tr>
@@ -31,14 +32,18 @@ export default function Table({ block }: Props) {
                   key={ci}
                   className="ebook-table-td"
                 >
-                  {cell}
+                  <MdInline>{cell}</MdInline>
                 </td>
               ))}
             </tr>
           ))}
         </tbody>
       </table>
-      {block.caption && <figcaption className="ebook-table-caption">{block.caption}</figcaption>}
+      {block.caption && (
+        <figcaption className="ebook-table-caption">
+          <MdInline>{block.caption}</MdInline>
+        </figcaption>
+      )}
     </figure>
   );
 }
