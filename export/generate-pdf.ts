@@ -18,7 +18,10 @@ async function resolveEbookPageDimensions(ebookId: string): Promise<{ width: num
 
 export async function generatePDF(ebookId: string, baseUrl: string): Promise<void> {
   const browser = await chromium.launch();
-  const page = await browser.newPage();
+  // deviceScaleFactor=1 matches headless default and avoids HiDPI font-metric
+  // differences that cause text to break at different points than the web preview.
+  const context = await browser.newContext({ deviceScaleFactor: 1 });
+  const page = await context.newPage();
 
   const { width: pageWidthMm, height: pageHeightMm } = await resolveEbookPageDimensions(ebookId);
 

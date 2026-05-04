@@ -7,6 +7,9 @@
   color: var(--ebook-text);
   font-family: var(--ebook-font-body);
   line-height: 1.7;
+  /* Consistent font rendering between browser preview and Playwright PDF export */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -493,8 +496,8 @@
   margin: var(--ebook-spacing-block-gap) 0;
   font-family: var(--ebook-font-mono);
   font-size: 0.875rem;
-  overflow-x: auto;
-  white-space: pre;
+  white-space: pre-wrap;
+  word-break: break-all;
 }
 
 /* ----- Image with caption ----- */

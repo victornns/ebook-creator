@@ -109,8 +109,8 @@ export const demoEbook: Ebook = {
   .then((csv) => {
     const rows = csv.split("\\n").slice(1);
     const totals = rows.map((row) => {
-      const [country, , year, emissions] = row.split(",");
-      return { country, year: Number(year), emissions: Number(emissions) };
+      const [country, emissions] = row.split(",");
+      return { country, emissions: Number(emissions) };
     });
     console.log(totals.filter((r) => r.country === "World"));
   });`,
