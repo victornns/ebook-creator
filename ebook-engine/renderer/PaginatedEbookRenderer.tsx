@@ -7,7 +7,7 @@ import type { Ebook, ChapterCover as ChapterCoverType } from "@/ebook-engine/typ
 import type { EbookTheme } from "@/ebook-engine/types/theme";
 import type { BackgroundConfig } from "@/ebook-engine/types/background";
 import Background from "@/ebook-engine/components/backgrounds/Background";
-import type { EbookPage, PaginationResult } from "@/ebook-engine/pagination/paginateEbook";
+import type { EbookPage, PaginationResult, TocMeasurement } from "@/ebook-engine/pagination/paginateEbook";
 import type { MeasuredBlock } from "@/ebook-engine/pagination/paginateSection";
 import type { PageLayout } from "@/ebook-engine/pagination/resolveLayout";
 import { resolveLayout } from "@/ebook-engine/pagination/resolveLayout";
@@ -146,6 +146,7 @@ function renderPage(page: EbookPage, layout: PageLayout, sectionPageMap: Record<
           <TableOfContents
             sections={page.tocSections ?? []}
             pageMap={sectionPageMap}
+            showTitle={!page.tocPageIndex || page.tocPageIndex === 0}
           />
         </EbookPageShell>
       );
@@ -270,7 +271,24 @@ export default function PaginatedEbookRenderer({ ebook, theme }: Props) {
         measuredMap.set(section.id, measured);
       }
 
-      const paginationResult = paginateEbook(ebook, measuredMap, contentHeightPx);
+      // ── Measure TOC groups for multi-page TOC pagination ──────────────────
+      let tocMeasurement: TocMeasurement | undefined;
+      const tocEl = container!.querySelector<HTMLElement>("[data-measure-toc]");
+      if (tocEl) {
+        const navEl = tocEl.querySelector<HTMLElement>(".ebook-toc");
+        const groupEls = Array.from(tocEl.querySelectorAll<HTMLElement>("[data-toc-group]"));
+        if (navEl && groupEls.length > 0) {
+          const navRect = navEl.getBoundingClientRect();
+          const groupRects = groupEls.map((el) => el.getBoundingClientRect());
+          // titleHeightPx = space from nav top to first group top (includes h2 + its margin)
+          const titleHeightPx = groupRects[0].top - navRect.top;
+          // groupHeightsPx[i] = distance from group i top to group i+1 top (last group to nav bottom)
+          const groupHeightsPx = groupRects.map((rect, i) => (i < groupRects.length - 1 ? groupRects[i + 1].top - rect.top : navRect.bottom - rect.top));
+          tocMeasurement = { titleHeightPx, groupHeightsPx };
+        }
+      }
+
+      const paginationResult = paginateEbook(ebook, measuredMap, contentHeightPx, tocMeasurement);
       setResult(paginationResult);
       setPhase("ready");
     }
@@ -316,6 +334,14 @@ export default function PaginatedEbookRenderer({ ebook, theme }: Props) {
           }}
           aria-hidden="true"
         >
+          {/* TOC measurement — render full TOC with empty pageMap (page nums don't affect height) */}
+          <div data-measure-toc>
+            <TableOfContents
+              sections={ebook.sections}
+              pageMap={{}}
+            />
+          </div>
+
           {measurableSections.map((section) => (
             <div
               key={section.id}

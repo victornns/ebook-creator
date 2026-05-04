@@ -2,6 +2,27 @@ import type { Block, Ebook, EbookCover, ChapterCover, Section } from "@/ebook-en
 import type { MeasuredBlock } from "./paginateSection";
 import { paginateSection } from "./paginateSection";
 
+interface TocGroup {
+  chapter: Section;
+  items: Section[];
+}
+
+function groupTocSections(sections: Section[]): TocGroup[] {
+  const groups: TocGroup[] = [];
+  let current: TocGroup | null = null;
+  for (const section of sections) {
+    if (section.chapterCover) {
+      current = { chapter: section, items: [] };
+      groups.push(current);
+    } else if (current) {
+      current.items.push(section);
+    } else {
+      groups.push({ chapter: section, items: [] });
+    }
+  }
+  return groups;
+}
+
 export type EbookPageType = "cover" | "toc" | "chapter-cover" | "content";
 
 export interface CoverPageData {
@@ -9,6 +30,11 @@ export interface CoverPageData {
   subtitle?: string;
   author: string;
   cover: EbookCover;
+}
+
+export interface TocMeasurement {
+  titleHeightPx: number;
+  groupHeightsPx: number[];
 }
 
 export interface EbookPage {
@@ -23,6 +49,8 @@ export interface EbookPage {
   chapterCover?: ChapterCover;
   sectionTitle?: string;
   tocSections?: Section[];
+  /** 0 = first TOC page (shows title), >0 = continuation pages (no title). */
+  tocPageIndex?: number;
   showPageNumber: boolean;
 }
 
@@ -43,7 +71,7 @@ export interface PaginationResult {
  *   3. Sections (each starts on a new page; chapter covers = one page)
  *   4. Acknowledgements (if set)
  */
-export function paginateEbook(ebook: Ebook, measuredBlocksMap: Map<string, MeasuredBlock[]>, contentHeightPx: number): PaginationResult {
+export function paginateEbook(ebook: Ebook, measuredBlocksMap: Map<string, MeasuredBlock[]>, contentHeightPx: number, tocMeasurement?: TocMeasurement): PaginationResult {
   const pages: EbookPage[] = [];
   let pageNumber = 1;
   const sectionPageMap: Record<string, number> = {};
@@ -65,13 +93,59 @@ export function paginateEbook(ebook: Ebook, measuredBlocksMap: Map<string, Measu
   }
 
   // ── Table of Contents ────────────────────────────────────────────────────
-  pages.push({
-    id: "page-toc",
-    pageNumber: pageNumber++,
-    type: "toc",
-    showPageNumber: true,
-    tocSections: ebook.sections,
-  });
+  const allTocGroups = groupTocSections(ebook.sections);
+
+  if (!tocMeasurement || allTocGroups.length === 0) {
+    // Fallback: single TOC page (no measurement data available yet)
+    pages.push({
+      id: "page-toc",
+      pageNumber: pageNumber++,
+      type: "toc",
+      showPageNumber: true,
+      tocSections: ebook.sections,
+      tocPageIndex: 0,
+    });
+  } else {
+    const { titleHeightPx, groupHeightsPx } = tocMeasurement;
+    const tocPages: TocGroup[][] = [];
+    let currentPageGroups: TocGroup[] = [];
+    let currentHeight = titleHeightPx; // page 1 starts with title
+
+    for (let i = 0; i < allTocGroups.length; i++) {
+      const group = allTocGroups[i];
+      const groupH = groupHeightsPx[i] ?? 0;
+
+      if (currentHeight + groupH > contentHeightPx && currentPageGroups.length > 0) {
+        tocPages.push(currentPageGroups);
+        currentPageGroups = [];
+        currentHeight = 0; // continuation pages have no title
+      }
+
+      currentPageGroups.push(group);
+      currentHeight += groupH;
+    }
+
+    if (currentPageGroups.length > 0) {
+      tocPages.push(currentPageGroups);
+    }
+
+    if (tocPages.length === 0) {
+      tocPages.push([]);
+    }
+
+    for (let i = 0; i < tocPages.length; i++) {
+      const pageGroups = tocPages[i];
+      const pageSections = pageGroups.flatMap((g) => [g.chapter, ...g.items]);
+      pages.push({
+        id: i === 0 ? "page-toc" : `page-toc-${i}`,
+        pageNumber: pageNumber++,
+        type: "toc",
+        showPageNumber: true,
+        tocSections: pageSections,
+        tocPageIndex: i,
+      });
+    }
+  }
 
   // ── Sections ──────────────────────────────────────────────────────────────
   const allSections: Section[] = [...ebook.sections];

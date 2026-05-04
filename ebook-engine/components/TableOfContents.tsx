@@ -3,6 +3,7 @@ import type { Section } from "@/ebook-engine/types/ebook";
 interface Props {
   sections: Section[];
   pageMap: Record<string, number>;
+  showTitle?: boolean;
 }
 
 interface ChapterGroup {
@@ -30,7 +31,7 @@ function groupByChapter(sections: Section[]): ChapterGroup[] {
   return groups;
 }
 
-export default function TableOfContents({ sections, pageMap }: Props) {
+export default function TableOfContents({ sections, pageMap, showTitle = true }: Props) {
   const groups = groupByChapter(sections);
 
   return (
@@ -38,13 +39,21 @@ export default function TableOfContents({ sections, pageMap }: Props) {
       className="ebook-toc"
       aria-label="Sumário"
     >
-      <h2 className="ebook-toc-title">Sumário</h2>
+      {showTitle && (
+        <h2
+          className="ebook-toc-title"
+          data-toc-title=""
+        >
+          Sumário
+        </h2>
+      )}
       <ol className="ebook-toc-list">
-        {groups.map((group) =>
+        {groups.map((group, groupIndex) =>
           group.chapter.chapterCover ? (
             <li
               key={group.chapter.id}
               className="ebook-toc-chapter-group"
+              data-toc-group={groupIndex}
             >
               <a
                 href={`#${group.chapter.id}`}
@@ -78,6 +87,7 @@ export default function TableOfContents({ sections, pageMap }: Props) {
             <li
               key={group.chapter.id}
               className="ebook-toc-item"
+              data-toc-group={groupIndex}
             >
               <a
                 href={`#${group.chapter.id}`}
