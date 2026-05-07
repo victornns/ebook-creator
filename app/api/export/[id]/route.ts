@@ -28,7 +28,7 @@ export interface SerializedEbook {
   title: string;
   subtitle?: string;
   author: string;
-  theme: Pick<EbookTheme, "colors" | "fonts">;
+  theme: Pick<EbookTheme, "colors" | "fonts" | "labels">;
   sections: SerializedSection[];
 }
 
@@ -76,7 +76,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     title: ebook.title,
     subtitle: ebook.subtitle,
     author: ebook.author,
-    theme: { colors: theme.colors, fonts: theme.fonts },
+    theme: { colors: theme.colors, fonts: theme.fonts, labels: theme.labels },
     sections: ebook.sections.map(serializeSection),
   };
 

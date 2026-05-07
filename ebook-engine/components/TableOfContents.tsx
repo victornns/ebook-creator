@@ -4,6 +4,8 @@ interface Props {
   sections: Section[];
   pageMap: Record<string, number>;
   showTitle?: boolean;
+  chapterLabel?: string;
+  tocTitle?: string;
 }
 
 interface ChapterGroup {
@@ -31,20 +33,20 @@ function groupByChapter(sections: Section[]): ChapterGroup[] {
   return groups;
 }
 
-export default function TableOfContents({ sections, pageMap, showTitle = true }: Props) {
+export default function TableOfContents({ sections, pageMap, showTitle = true, chapterLabel = "Chapter", tocTitle = "Contents" }: Props) {
   const groups = groupByChapter(sections);
 
   return (
     <nav
       className="ebook-toc"
-      aria-label="Sumário"
+      aria-label={tocTitle}
     >
       {showTitle && (
         <h2
           className="ebook-toc-title"
           data-toc-title=""
         >
-          Sumário
+          {tocTitle}
         </h2>
       )}
       <ol className="ebook-toc-list">
@@ -59,8 +61,10 @@ export default function TableOfContents({ sections, pageMap, showTitle = true }:
                 href={`#${group.chapter.id}`}
                 className="ebook-toc-chapter-link"
               >
-                <span className="ebook-toc-chapter-number">Capítulo {group.chapter.chapterCover.chapterNumber}</span>
-                <span className="ebook-toc-chapter-title">{group.chapter.title.replace(/^Capítulo \d+ — /, "").replace(/^Capítulo \d+: /, "")}</span>
+                <span className="ebook-toc-chapter-number">
+                  {chapterLabel} {group.chapter.chapterCover.chapterNumber}
+                </span>
+                <span className="ebook-toc-chapter-title">{group.chapter.title.replace(new RegExp(`^${chapterLabel} \\d+ — `), "").replace(new RegExp(`^${chapterLabel} \\d+: `), "")}</span>
                 {pageMap[group.chapter.id] !== undefined && <span className="ebook-toc-page-num">{pageMap[group.chapter.id]}</span>}
               </a>
 

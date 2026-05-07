@@ -56,6 +56,7 @@ interface SerializedEbook {
   theme: {
     colors: { primary: string; secondary: string; text: string; accent: string; muted: string };
     fonts: { heading: string; body: string; mono?: string };
+    labels?: { chapter?: string; toc?: string };
   };
   sections: SerializedSection[];
 }
@@ -164,9 +165,9 @@ function blockToXhtml(block: SerializedBlock, imageMap: Map<string, string>): st
 
 // ── Section → XHTML document ──────────────────────────────────────────────────
 
-function sectionToXhtml(section: SerializedSection, imageMap: Map<string, string>, cssPath: string): string {
+function sectionToXhtml(section: SerializedSection, imageMap: Map<string, string>, cssPath: string, chapterLabel = "Chapter"): string {
   const chapterHeader = section.chapterNumber
-    ? `<div class="chapter-header"><span class="chapter-number">Chapter ${section.chapterNumber}</span><h1 class="chapter-title">${esc(section.title)}</h1>${section.chapterDescription ? `<p class="chapter-description">${esc(section.chapterDescription)}</p>` : ""}</div>`
+    ? `<div class="chapter-header"><span class="chapter-number">${chapterLabel} ${section.chapterNumber}</span><h1 class="chapter-title">${esc(section.title)}</h1>${section.chapterDescription ? `<p class="chapter-description">${esc(section.chapterDescription)}</p>` : ""}</div>`
     : "";
 
   const blocksHtml = section.blocks.map((b) => blockToXhtml(b, imageMap)).join("\n");
@@ -222,7 +223,7 @@ function buildContentOpf(ebook: SerializedEbook, chapterIds: string[], imageEntr
 </package>`;
 }
 
-function buildNav(ebook: SerializedEbook, sections: SerializedSection[], cssPath: string): string {
+function buildNav(ebook: SerializedEbook, sections: SerializedSection[], cssPath: string, tocTitle = "Table of Contents"): string {
   const items = sections.map((s) => `<li><a href="content/${s.id}.xhtml">${esc(s.title)}</a></li>`).join("\n      ");
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -235,7 +236,7 @@ function buildNav(ebook: SerializedEbook, sections: SerializedSection[], cssPath
   </head>
   <body>
     <nav epub:type="toc">
-      <h1>Table of Contents</h1>
+      <h1>${tocTitle}</h1>
       <ol>
       ${items}
       </ol>
@@ -432,12 +433,12 @@ export async function generateEpub(ebookId: string, baseUrl: string): Promise<vo
 
   // 6. Content chapters
   for (const section of allSections) {
-    const xhtml = sectionToXhtml(section, imageMap, "../styles/ebook.css");
+    const xhtml = sectionToXhtml(section, imageMap, "../styles/ebook.css", ebook.theme.labels?.chapter);
     zip.file(`OEBPS/content/${section.id}.xhtml`, xhtml);
   }
 
   // 7. Navigation document
-  zip.file("OEBPS/nav.xhtml", buildNav(ebook, allSections, "styles/ebook.css"));
+  zip.file("OEBPS/nav.xhtml", buildNav(ebook, allSections, "styles/ebook.css", ebook.theme.labels?.toc));
 
   // 8. content.opf manifest
   zip.file(

@@ -105,7 +105,7 @@ function resolvePageBackground(src: { background?: BackgroundConfig; backgroundI
 
 // ── Page renderers ────────────────────────────────────────────────────────────
 
-function renderChapterCoverContent(chapterCover: ChapterCoverType, sectionTitle: string) {
+function renderChapterCoverContent(chapterCover: ChapterCoverType, sectionTitle: string, labels?: EbookTheme["labels"]) {
   const textColor = chapterCover.textColor ?? "#ffffff";
   const layout = chapterCover.layout ?? "horizontal";
 
@@ -123,7 +123,9 @@ function renderChapterCoverContent(chapterCover: ChapterCoverType, sectionTitle:
         </div>
       )}
       <div className="ebook-chapter-cover-content">
-        <span className="ebook-chapter-cover-number">Capítulo {chapterCover.chapterNumber}</span>
+        <span className="ebook-chapter-cover-number">
+          {labels?.chapter ?? "Chapter"} {chapterCover.chapterNumber}
+        </span>
         <h2 className="ebook-chapter-cover-title">{sectionTitle}</h2>
         {chapterCover.description && <p className="ebook-chapter-cover-description">{chapterCover.description}</p>}
       </div>
@@ -142,7 +144,7 @@ function renderChapterCoverContent(chapterCover: ChapterCoverType, sectionTitle:
   );
 }
 
-function renderPage(page: EbookPage, layout: PageLayout, sectionPageMap: Record<string, number>, themeBackgroundVariant?: BackgroundConfig["variant"]): React.ReactNode {
+function renderPage(page: EbookPage, layout: PageLayout, sectionPageMap: Record<string, number>, themeBackgroundVariant?: BackgroundConfig["variant"], labels?: EbookTheme["labels"]): React.ReactNode {
   const anchorId = page.isFirstPageOfSection ? page.sectionId : undefined;
 
   switch (page.type) {
@@ -182,6 +184,8 @@ function renderPage(page: EbookPage, layout: PageLayout, sectionPageMap: Record<
             sections={page.tocSections ?? []}
             pageMap={sectionPageMap}
             showTitle={!page.tocPageIndex || page.tocPageIndex === 0}
+            chapterLabel={labels?.chapter}
+            tocTitle={labels?.toc}
           />
         </EbookPageShell>
       );
@@ -201,7 +205,7 @@ function renderPage(page: EbookPage, layout: PageLayout, sectionPageMap: Record<
           backgroundStyle={chBgStyle}
           backgroundNode={chBgNode}
         >
-          {renderChapterCoverContent(chapterCover, sectionTitle ?? "")}
+          {renderChapterCoverContent(chapterCover, sectionTitle ?? "", labels)}
         </EbookPageShell>
       );
     }
@@ -381,6 +385,8 @@ export default function PaginatedEbookRenderer({ ebook, theme }: Props) {
             <TableOfContents
               sections={ebook.sections}
               pageMap={{}}
+              chapterLabel={theme.labels?.chapter}
+              tocTitle={theme.labels?.toc}
             />
           </div>
 
@@ -410,7 +416,7 @@ export default function PaginatedEbookRenderer({ ebook, theme }: Props) {
       )}
 
       {/* Rendered pages (visible after pagination is complete) */}
-      {phase === "ready" && result.pages.map((page) => renderPage(page, layout, result.sectionPageMap, theme.background))}
+      {phase === "ready" && result.pages.map((page) => renderPage(page, layout, result.sectionPageMap, theme.background, theme.labels))}
     </div>
   );
 }
