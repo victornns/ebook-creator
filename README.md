@@ -1,62 +1,104 @@
 # ebook-creator
 
-Create and export ebooks using Next.js and TypeScript. Define content, themes, and layout in code, preview in the browser, and export to PDF and EPUB3.
+**ebook-creator** is an open-source ebook generator built with Next.js, React, and TypeScript.
 
-Live demo:
+Create ebooks as code using structured content, reusable blocks, custom themes, browser preview, and automated export to PDF and EPUB3.
+
+Live demo:  
 https://ebook-creator-demo.vercel.app/
+
+---
+
+## Features
+
+- Write ebooks as structured TypeScript objects
+- Preview ebooks in the browser with Next.js
+- Export to PDF and EPUB3
+- Pixel-accurate JavaScript pagination engine — no CSS print engine dependency
+- Auto-generated Table of Contents
+- Chapter covers with configurable layouts and SVG backgrounds
+- 15 reusable content blocks with Markdown support
+- Custom themes or predefined presets (minimal, corporate, modern, documentation)
+- Configurable page sizes: A2, A3, A4, A5, Letter, Legal, Tabloid, and custom dimensions
+- Google Fonts auto-loading
+- Build technical guides, documentation, reports, lead magnets, and self-publishing drafts
 
 ---
 
 ## Usage
 
+Install dependencies:
+
 ```bash
 npm install
+```
+
+Start the development server:
+
+```bash
 npm run dev
 ```
 
-Open http://localhost:3000 to see all ebooks.  
-Preview a specific ebook at http://localhost:3000/preview/{id}
+Open the ebook list:
+
+```txt
+http://localhost:3000
+```
+
+Preview a specific ebook:
+
+```txt
+http://localhost:3000/preview/{id}
+```
 
 ---
 
 ## Export
 
-Dev server must be running.
+The development server must be running before exporting.
+
+Export a specific ebook:
 
 ```bash
-# Export a specific ebook
 npm run export:pdf demo
 npm run export:epub demo
+```
 
-# Export all ebooks
+Export all ebooks:
+
+```bash
 npm run export:pdf:all
 npm run export:epub:all
 ```
 
-A custom host can be passed as a second argument (default: `http://localhost:3000`):
+A custom host can be passed as a second argument.  
+The default host is `http://localhost:3000`.
 
 ```bash
 npm run export:pdf demo http://localhost:4000
 ```
 
-Output:
-public/output/{id}.pdf  
+Generated files are saved to:
+
+```txt
+public/output/{id}.pdf
 public/output/{id}.epub
+```
 
 ---
 
 ## Create a new ebook
 
-Structure:
+Each ebook lives inside the `ebooks` directory.
 
-```
+```txt
 ebooks/
   my-ebook/
     ├── ebook.ts
     ├── theme.ts
 ```
 
-Example:
+Example ebook:
 
 ```ts
 export const myEbook = {
@@ -68,34 +110,46 @@ export const myEbook = {
       id: "intro",
       title: "Introduction",
       blocks: [
-        { type: "heading", level: 1, content: "Chapter title" },
-        { type: "rich-paragraph", content: "Text content" },
+        {
+          type: "heading",
+          level: 1,
+          content: "Chapter title",
+        },
+        {
+          type: "rich-paragraph",
+          content: "Text content with **Markdown** support.",
+        },
       ],
     },
   ],
 };
 ```
 
-Register it:
+Register the ebook:
 
 ```ts
 export const ebookRegistry = {
-  "my-ebook": { ebook: myEbook, theme },
+  "my-ebook": {
+    ebook: myEbook,
+    theme,
+  },
 };
 ```
+
+After registering it, the ebook will be available in the browser preview and export commands.
 
 ---
 
 ## Theme presets
 
-Predefined themes for common use cases, available in `ebook-engine/presets.ts`.
+Predefined themes are available in `ebook-engine/presets.ts`.
 
 | Preset | Style |
 |---|---|
-| `minimal` | Clean, editorial |
-| `corporate` | Formal, structured |
-| `modern` | Expressive, balanced |
-| `documentation` | Technical, high clarity |
+| `minimal` | Clean and editorial |
+| `corporate` | Formal and structured |
+| `modern` | Expressive and balanced |
+| `documentation` | Technical and highly readable |
 
 Use a preset:
 
@@ -105,13 +159,15 @@ import { presets } from "@/ebook-engine/presets";
 export const theme = presets.corporate;
 ```
 
-Override fields:
+Override specific fields:
 
 ```ts
 import { presets, extendPreset } from "@/ebook-engine/presets";
 
 export const theme = extendPreset(presets.corporate, {
-  colors: { accent: "#e63946" },
+  colors: {
+    accent: "#e63946",
+  },
 });
 ```
 
@@ -119,12 +175,16 @@ export const theme = extendPreset(presets.corporate, {
 
 ## Content blocks
 
-All text fields across all block types support Markdown formatting: **bold**, *italic*, `code`, [links](url), and ~~strikethrough~~. Block-level blocks (`rich-paragraph`, `quote`, `highlight`, `note`, `warning`, `action-box`) support full Markdown. Inline contexts (`heading`, list items, table cells, captions) render inline Markdown only.
+Text fields support Markdown formatting such as **bold**, *italic*, `code`, [links](url), and ~~strikethrough~~.
+
+Block-level components like `rich-paragraph`, `quote`, `highlight`, `note`, `warning`, and `action-box` support full Markdown.
+
+Inline contexts such as headings, list items, table cells, and captions render inline Markdown only.
 
 | Type | Description |
 |---|---|
-| `rich-paragraph` | Body text with inline Markdown (**bold**, *italic*, `code`, links) |
-| `heading` | Section title, levels 1–3 |
+| `rich-paragraph` | Body text with Markdown support |
+| `heading` | Section title, levels 1 to 3 |
 | `quote` | Styled pull quote |
 | `highlight` | Short emphasized phrase or key takeaway |
 | `note` | Tip or contextual explanation |
@@ -141,6 +201,14 @@ All text fields across all block types support Markdown formatting: **bold**, *i
 
 ---
 
-## Goal
+## Project goal
 
-Build structured ebooks with full control over content, layout, and export, without relying on visual editors.
+The goal of **ebook-creator** is to make ebook production more structured and programmable.
+
+Instead of using visual editors or manually adjusting pages, you define the content, theme, and layout in code. The engine handles preview and export, making it easier to keep ebooks consistent, reusable, and version-controlled.
+
+---
+
+## License
+
+MIT

@@ -100,17 +100,17 @@ export const componentsReferenceEbook: Ebook = {
         { type: "heading", level: 2, content: "Bullet List" },
         {
           type: "rich-paragraph",
-          content: "The `list` block renders a classic bulleted list. Items are plain strings — no Markdown support inside individual items. Use this for unordered enumerations where sequence does not matter.",
+          content: "The `list` block renders a classic bulleted list. Each item supports **inline Markdown** (bold, italic, code, links, strikethrough). Use this for unordered enumerations where sequence does not matter.",
         },
         {
           type: "list",
-          items: ["First item in the list", "Second item — a bit longer to show line wrapping behaviour inside the bullet", "Third item", "Fourth item with **bold** — note: Markdown is not parsed inside list items", "Fifth item — last in the set"],
+          items: ["First item in the list", "Second item — a bit longer to show line wrapping behaviour inside the bullet", "Third item", "Fourth item with **bold** and *italic* — inline Markdown works inside list items", "Fifth item — last in the set"],
         },
 
         { type: "heading", level: 2, content: "Item List (Grid)" },
         {
           type: "rich-paragraph",
-          content: "The `item-list` block renders items in a two-column grid with a small accent dot. Use it for dense, scannable sets of facts, features, or attributes where each item is short.",
+          content: "The `item-list` block renders items in a two-column grid with a small accent dot. Both the label and each item support **inline Markdown**. Use it for dense, scannable sets of facts, features, or attributes where each item is short.",
         },
         {
           type: "item-list",
@@ -122,7 +122,7 @@ export const componentsReferenceEbook: Ebook = {
         { type: "heading", level: 2, content: "Numbered Steps" },
         {
           type: "rich-paragraph",
-          content: "The `steps` block renders a numbered sequence with large, accent-coloured numerals. Use it when order matters — installation instructions, workflows, recipes, or any sequential process.",
+          content: "The `steps` block renders a numbered sequence with large, accent-coloured numerals. Both the label and each step support **inline Markdown**. Use it when order matters — installation instructions, workflows, recipes, or any sequential process.",
         },
         {
           type: "steps",
@@ -209,6 +209,7 @@ export const myEbook: Ebook = {
 };`,
         },
 
+        { type: "page-break" },
         { type: "heading", level: 2, content: "Table" },
         {
           type: "rich-paragraph",
@@ -219,19 +220,19 @@ export const myEbook: Ebook = {
           caption: "All block types available in the ebook engine, grouped by category.",
           headers: ["Block type", "Category", "Markdown support", "Notes"],
           rows: [
-            ["rich-paragraph", "Content", "Yes", "Main body text"],
-            ["heading", "Structure", "No", "Levels 1–3"],
-            ["highlight", "Content", "No", "Pull-quote style"],
-            ["quote", "Content", "No", "Left-bordered blockquote"],
-            ["note", "Callout", "Yes", "Optional label"],
-            ["warning", "Callout", "Yes", "Optional label"],
-            ["action-box", "Content", "No", "Optional label"],
-            ["list", "Structure", "No", "Bulleted list"],
-            ["item-list", "Structure", "No", "2-col grid with dots"],
-            ["steps", "Structure", "No", "Numbered sequence"],
-            ["image-with-caption", "Media", "No", "Optional caption"],
+            ["rich-paragraph", "Content", "Yes (full)", "Main body text"],
+            ["heading", "Structure", "Inline", "Levels 1–3"],
+            ["highlight", "Content", "Yes (full)", "Pull-quote style"],
+            ["quote", "Content", "Yes (full)", "Left-bordered blockquote"],
+            ["note", "Callout", "Yes (full)", "Optional label (inline)"],
+            ["warning", "Callout", "Yes (full)", "Optional label (inline)"],
+            ["action-box", "Content", "Yes (full)", "Optional label (inline)"],
+            ["list", "Structure", "Inline", "Bulleted list"],
+            ["item-list", "Structure", "Inline", "2-col grid with dots"],
+            ["steps", "Structure", "Inline", "Numbered sequence"],
+            ["image-with-caption", "Media", "Inline", "Caption only"],
             ["code", "Structure", "No", "Monospaced pre"],
-            ["table", "Structure", "No", "Optional caption"],
+            ["table", "Structure", "Inline", "Headers and cells"],
             ["divider", "Utility", "—", "Horizontal rule"],
             ["page-break", "Utility", "—", "Forces a new page"],
           ],
