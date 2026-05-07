@@ -1,4 +1,5 @@
 import Md from "@/ebook-engine/components/Md";
+import MdInline from "@/ebook-engine/components/MdInline";
 import type { NoteBlock, WarningBlock } from "@/ebook-engine/types/ebook";
 
 // Note and Warning share identical structure (optional label + content paragraph).
@@ -12,7 +13,11 @@ export default function Callout({ block }: { block: NoteBlock | WarningBlock }) 
       className={`ebook-${v}`}
       role={v === "warning" ? "alert" : "note"}
     >
-      {block.label && <p className={`ebook-${v}-label`}>{block.label}</p>}
+      {block.label && (
+        <p className={`ebook-${v}-label`}>
+          <MdInline>{block.label}</MdInline>
+        </p>
+      )}
       <Md paragraphClass={`ebook-${v}-content`}>{block.content}</Md>
     </div>
   );
