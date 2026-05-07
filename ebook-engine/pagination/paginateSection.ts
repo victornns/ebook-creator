@@ -24,6 +24,9 @@ export function paginateSection(measuredBlocks: MeasuredBlock[], contentHeightPx
   const pages: ContentPage[] = [];
   let currentBlocks: Block[] = [];
   let currentHeight = 0;
+  // Bottom margin of the last placed block. Adjacent margins collapse in CSS normal
+  // flow, so the actual gap between two blocks is max(prevBottom, nextTop), not their sum.
+  let pendingBottomMargin = 0;
   let isFirstPage = true;
   let isFirstBlockOfPage = true;
 
@@ -31,6 +34,7 @@ export function paginateSection(measuredBlocks: MeasuredBlock[], contentHeightPx
     pages.push({ blocks: currentBlocks, isFirstPage });
     currentBlocks = [];
     currentHeight = 0;
+    pendingBottomMargin = 0;
     isFirstPage = false;
     isFirstBlockOfPage = true;
   }
@@ -42,24 +46,27 @@ export function paginateSection(measuredBlocks: MeasuredBlock[], contentHeightPx
       continue;
     }
 
-    // Effective height treats this block as if it were the last on the page:
-    // CSS removes margin-bottom from the last child, so we subtract it before
-    // checking overflow. This mirrors what the browser will actually render.
-    const effectiveHeight = heightPx - marginBottomPx;
+    const contentH = heightPx - marginTopPx - marginBottomPx;
+
+    // Gap before this block: CSS normal-flow margin collapsing between the previous
+    // block's bottom margin and this block's top margin. The first block on a page
+    // has its top margin zeroed by `.ebook-page-blocks > *:first-child { margin-top: 0 }`,
+    // so its gap is always 0.
+    const gap = isFirstBlockOfPage ? 0 : Math.max(pendingBottomMargin, marginTopPx);
+
+    // Overflow check: space this block would consume if it were the last on the page
+    // (trailing bottom margin is clipped by overflow:hidden, so we exclude it).
+    const effectiveHeight = gap + contentH;
     const wouldOverflow = currentHeight + effectiveHeight > contentHeightPx;
     if (wouldOverflow && currentBlocks.length > 0) {
       flush();
     }
 
     currentBlocks.push(block);
-    // Adjacent block margins collapse inside .ebook-page-blocks (CSS normal flow).
-    // Each measured heightPx = content + marginTop + marginBottom (overflow:hidden wrapper
-    // contains both margins). To match what the browser actually renders:
-    //   - First block on page: CSS zeros margin-top; bottom margin is pending → subtract both.
-    //   - Non-first block: top margin collapses with previous block's bottom margin (only
-    //     one blockGap of space exists between them) → subtract marginTop only.
-    const heightContribution = isFirstBlockOfPage ? heightPx - marginTopPx - marginBottomPx : heightPx - marginTopPx;
-    currentHeight += heightContribution;
+    // After a flush isFirstBlockOfPage is true, so actualGap is 0 (block is now first).
+    const actualGap = isFirstBlockOfPage ? 0 : Math.max(pendingBottomMargin, marginTopPx);
+    currentHeight += actualGap + contentH;
+    pendingBottomMargin = marginBottomPx;
     isFirstBlockOfPage = false;
   }
 

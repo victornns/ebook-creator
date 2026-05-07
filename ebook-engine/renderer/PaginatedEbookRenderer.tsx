@@ -2,7 +2,7 @@
 
 import type React from "react";
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
 import type { Ebook, ChapterCover as ChapterCoverType } from "@/ebook-engine/types/ebook";
 import type { EbookTheme } from "@/ebook-engine/types/theme";
 import type { BackgroundConfig } from "@/ebook-engine/types/background";
@@ -28,33 +28,35 @@ import TableOfContents from "@/ebook-engine/components/TableOfContents";
 // This avoids relying on a CSS print engine and gives pixel-accurate pagination.
 
 /**
- * Injects Google Fonts stylesheet links and returns a stable promise that
- * resolves only after the stylesheet has loaded AND document.fonts.ready
- * fires. This guarantees that any subsequent getBoundingClientRect() calls
- * use the correct ebook fonts instead of fallback fonts.
+ * Injects Google Fonts stylesheet links and returns a ref whose `.current`
+ * is a promise that resolves only after the font files have been downloaded
+ * and are ready for use in layout.
  *
- * Without this, `document.fonts.ready` can resolve before the dynamically-
- * injected <link> has been fetched and its @font-face rules parsed — causing
- * measurement with fallback fonts (different metrics) in environments with a
- * cold font cache (e.g. Playwright PDF export).
+ * The promise is created INSIDE the effect (not at render time) so that
+ * React Strict Mode's mount → cleanup → remount cycle always produces a fresh
+ * promise. If the promise were created at render time and then resolved early
+ * in the cleanup, the measure effect would await an already-settled promise
+ * and measure with fallback fonts on the second mount.
+ *
+ * The measure effect reads `ref.current` at the point of `await`, which is
+ * always the promise created by the most recent effect invocation.
  */
-function useGoogleFonts(families: string[] | undefined): Promise<void> {
-  // Stable promise ref: created once and resolved when fonts are ready.
-  const promiseRef = useRef<Promise<void>>(null as unknown as Promise<void>);
-  const resolveRef = useRef<(() => void) | null>(null);
-
-  if (!promiseRef.current) {
-    if (families?.length) {
-      promiseRef.current = new Promise<void>((resolve) => {
-        resolveRef.current = resolve;
-      });
-    } else {
-      promiseRef.current = Promise.resolve();
-    }
-  }
+function useGoogleFonts(families: string[] | undefined): MutableRefObject<Promise<void>> {
+  const readyRef = useRef<Promise<void>>(Promise.resolve());
 
   useEffect(() => {
-    if (!families?.length) return;
+    if (!families?.length) {
+      readyRef.current = Promise.resolve();
+      return;
+    }
+
+    // Create a fresh promise for this mount cycle. Any previous promise
+    // (from a Strict Mode warm-up mount) is simply orphaned.
+    let resolve: () => void;
+    readyRef.current = new Promise<void>((r) => {
+      resolve = r;
+    });
+
     const params = families.map((f) => `family=${f.replace(/ /g, "+")}:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400`).join("&");
     const href = `https://fonts.googleapis.com/css2?${params}&display=swap`;
     const preconnect = document.createElement("link");
@@ -67,23 +69,31 @@ function useGoogleFonts(families: string[] | undefined): Promise<void> {
     const link = document.createElement("link");
     link.rel = "stylesheet";
     link.href = href;
-    // Resolve the promise once the stylesheet is parsed and fonts are ready.
-    const onLoad = () => document.fonts.ready.then(() => resolveRef.current?.());
-    const onError = () => resolveRef.current?.(); // proceed even on failure
+    // Once the stylesheet is parsed and @font-face rules are registered,
+    // explicitly request each weight/style so the browser downloads the
+    // actual font files before we measure.
+    const onLoad = () => {
+      const loads = families.flatMap((f) => [document.fonts.load(`300 1em "${f}"`), document.fonts.load(`400 1em "${f}"`), document.fonts.load(`italic 400 1em "${f}"`), document.fonts.load(`600 1em "${f}"`), document.fonts.load(`700 1em "${f}"`)]);
+      Promise.allSettled(loads).then(() => resolve());
+    };
+    const onError = () => resolve(); // proceed even on failure
     link.addEventListener("load", onLoad);
     link.addEventListener("error", onError);
     document.head.append(preconnect, preconnectOrigin, link);
     return () => {
+      // Clean up DOM nodes. Do NOT resolve the promise here — in Strict Mode
+      // this cleanup runs while the component is still alive (before remount),
+      // and resolving early would cause the measure effect to run before fonts
+      // are ready.
       link.removeEventListener("load", onLoad);
       link.removeEventListener("error", onError);
       preconnect.remove();
       preconnectOrigin.remove();
       link.remove();
-      resolveRef.current?.(); // ensure promise resolves on unmount
     };
   }, [families]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return promiseRef.current;
+  return readyRef;
 }
 
 function resolveBackgroundStyle(src: { backgroundImage?: string; backgroundColor?: string }, defaultColor: string): React.CSSProperties {
@@ -243,7 +253,7 @@ interface Props {
 }
 
 export default function PaginatedEbookRenderer({ ebook, theme }: Props) {
-  const fontsReady = useGoogleFonts(theme.fonts.googleFonts);
+  const fontsReadyRef = useGoogleFonts(theme.fonts.googleFonts);
 
   const layout = useMemo(() => resolveLayout(theme), [theme]);
 
@@ -283,10 +293,9 @@ export default function PaginatedEbookRenderer({ ebook, theme }: Props) {
 
     async function measure() {
       // Wait for Google Fonts to be fully loaded before measuring.
-      // fontsReady resolves only after the injected stylesheet has been fetched
-      // and document.fonts.ready fires — preventing measurements with fallback
-      // fonts in environments with a cold font cache (e.g. Playwright export).
-      await fontsReady;
+      // fontsReadyRef.current is read here (not captured at render time) so we
+      // always await the promise created by the most recent effect invocation.
+      await fontsReadyRef.current;
 
       // next/image reserves the correct space via known dimensions (static imports
       // or explicit width/height from cdnImage) even before pixels load, so waiting
