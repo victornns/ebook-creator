@@ -27,7 +27,32 @@ import TableOfContents from "@/ebook-engine/components/TableOfContents";
 //   3. Render   — each EbookPage is rendered inside a fixed-size EbookPage shell.
 // This avoids relying on a CSS print engine and gives pixel-accurate pagination.
 
-function useGoogleFonts(families: string[] | undefined) {
+/**
+ * Injects Google Fonts stylesheet links and returns a stable promise that
+ * resolves only after the stylesheet has loaded AND document.fonts.ready
+ * fires. This guarantees that any subsequent getBoundingClientRect() calls
+ * use the correct ebook fonts instead of fallback fonts.
+ *
+ * Without this, `document.fonts.ready` can resolve before the dynamically-
+ * injected <link> has been fetched and its @font-face rules parsed — causing
+ * measurement with fallback fonts (different metrics) in environments with a
+ * cold font cache (e.g. Playwright PDF export).
+ */
+function useGoogleFonts(families: string[] | undefined): Promise<void> {
+  // Stable promise ref: created once and resolved when fonts are ready.
+  const promiseRef = useRef<Promise<void>>(null as unknown as Promise<void>);
+  const resolveRef = useRef<(() => void) | null>(null);
+
+  if (!promiseRef.current) {
+    if (families?.length) {
+      promiseRef.current = new Promise<void>((resolve) => {
+        resolveRef.current = resolve;
+      });
+    } else {
+      promiseRef.current = Promise.resolve();
+    }
+  }
+
   useEffect(() => {
     if (!families?.length) return;
     const params = families.map((f) => `family=${f.replace(/ /g, "+")}:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400`).join("&");
@@ -42,13 +67,23 @@ function useGoogleFonts(families: string[] | undefined) {
     const link = document.createElement("link");
     link.rel = "stylesheet";
     link.href = href;
+    // Resolve the promise once the stylesheet is parsed and fonts are ready.
+    const onLoad = () => document.fonts.ready.then(() => resolveRef.current?.());
+    const onError = () => resolveRef.current?.(); // proceed even on failure
+    link.addEventListener("load", onLoad);
+    link.addEventListener("error", onError);
     document.head.append(preconnect, preconnectOrigin, link);
     return () => {
+      link.removeEventListener("load", onLoad);
+      link.removeEventListener("error", onError);
       preconnect.remove();
       preconnectOrigin.remove();
       link.remove();
+      resolveRef.current?.(); // ensure promise resolves on unmount
     };
-  }, [families]);
+  }, [families]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return promiseRef.current;
 }
 
 function resolveBackgroundStyle(src: { backgroundImage?: string; backgroundColor?: string }, defaultColor: string): React.CSSProperties {
@@ -204,7 +239,7 @@ interface Props {
 }
 
 export default function PaginatedEbookRenderer({ ebook, theme }: Props) {
-  useGoogleFonts(theme.fonts.googleFonts);
+  const fontsReady = useGoogleFonts(theme.fonts.googleFonts);
 
   const layout = useMemo(() => resolveLayout(theme), [theme]);
 
@@ -243,8 +278,11 @@ export default function PaginatedEbookRenderer({ ebook, theme }: Props) {
     if (!container || !mmEl) return;
 
     async function measure() {
-      // Wait for fonts so text heights are accurate
-      await document.fonts.ready;
+      // Wait for Google Fonts to be fully loaded before measuring.
+      // fontsReady resolves only after the injected stylesheet has been fetched
+      // and document.fonts.ready fires — preventing measurements with fallback
+      // fonts in environments with a cold font cache (e.g. Playwright export).
+      await fontsReady;
 
       // next/image reserves the correct space via known dimensions (static imports
       // or explicit width/height from cdnImage) even before pixels load, so waiting
@@ -263,9 +301,13 @@ export default function PaginatedEbookRenderer({ ebook, theme }: Props) {
         const measured: MeasuredBlock[] = [];
         for (let i = 0; i < section.blocks.length; i++) {
           const blockEl = sectionEl.querySelector<HTMLElement>(`[data-measure-block="${i}"]`);
+          const firstChild = blockEl?.firstElementChild as HTMLElement | null;
+          const lastChild = blockEl?.lastElementChild as HTMLElement | null;
           measured.push({
             block: section.blocks[i],
             heightPx: blockEl ? blockEl.getBoundingClientRect().height : 0,
+            marginTopPx: firstChild ? parseFloat(getComputedStyle(firstChild).marginTop) : 0,
+            marginBottomPx: lastChild ? parseFloat(getComputedStyle(lastChild).marginBottom) : 0,
           });
         }
         measuredMap.set(section.id, measured);
