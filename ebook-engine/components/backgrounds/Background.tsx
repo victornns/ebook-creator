@@ -36,7 +36,6 @@ const VARIANT_MAP = {
 export default function Background({ config }: Props) {
   const VariantComponent = VARIANT_MAP[config.variant];
 
-  // Build optional per-page CSS variable overrides.
   const colorOverrides: React.CSSProperties = {};
   if (config.colors?.primary) (colorOverrides as Record<string, string>)["--ebook-bg-primary"] = config.colors.primary;
   if (config.colors?.secondary) (colorOverrides as Record<string, string>)["--ebook-bg-secondary"] = config.colors.secondary;

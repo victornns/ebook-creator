@@ -1,11 +1,11 @@
 import MdInline from "@/ebook-engine/components/MdInline";
-import type { ItemListBlock } from "@/ebook-engine/types/ebook"; // label and items both support inline Markdown
+import type { ItemListBlock } from "@/ebook-engine/types/ebook";
 
 export default function ItemList({ block }: { block: ItemListBlock }) {
   return (
     <div className="ebook-item-list">
       {block.label && (
-        <p className="ebook-recipe-label">
+        <p className="ebook-block-label">
           <MdInline>{block.label}</MdInline>
         </p>
       )}

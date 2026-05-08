@@ -269,9 +269,9 @@
   margin: 0.4rem 0;
 }
 
-/* ----- Recipe blocks ----- */
+/* ----- Shared block label (item-list, steps) ----- */
 
-.ebook-recipe-label {
+.ebook-block-label {
   font-size: 0.68rem;
   font-weight: 700;
   text-transform: uppercase;

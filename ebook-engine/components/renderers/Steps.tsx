@@ -4,7 +4,7 @@ import type { StepsBlock } from "@/ebook-engine/types/ebook";
 export default function Steps({ block }: { block: StepsBlock }) {
   return (
     <div className="ebook-steps">
-      <p className="ebook-recipe-label">
+      <p className="ebook-block-label">
         <MdInline>{block.label ?? "Steps"}</MdInline>
       </p>
       <ol className="ebook-steps-list">

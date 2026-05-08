@@ -148,9 +148,7 @@ export function paginateEbook(ebook: Ebook, measuredBlocksMap: Map<string, Measu
   }
 
   // ── Sections ──────────────────────────────────────────────────────────────
-  const allSections: Section[] = [...ebook.sections];
-
-  for (const section of allSections) {
+  for (const section of ebook.sections) {
     sectionPageMap[section.id] = pageNumber;
 
     if (section.chapterCover) {

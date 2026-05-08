@@ -33,7 +33,7 @@ export async function generatePDF(ebookId: string, baseUrl: string): Promise<voi
   });
 
   const url = `${baseUrl}/preview/${ebookId}`;
-  console.log(`Abrindo: ${url}`);
+  console.log(`Opening: ${url}`);
   await page.goto(url, { waitUntil: "networkidle" });
 
   // Wait for the JS pagination engine to finish measuring and laying out pages
@@ -62,7 +62,7 @@ export async function generatePDF(ebookId: string, baseUrl: string): Promise<voi
   });
 
   await browser.close();
-  console.log(`✅ PDF gerado: ${outputPath}`);
+  console.log(`✅ PDF saved: ${outputPath}`);
 }
 
 // Only run when invoked directly, not when imported by generate-all-pdfs.ts
@@ -70,7 +70,7 @@ if (process.argv[1]?.endsWith("generate-pdf.ts")) {
   const ebookId = process.argv[2];
   const baseUrl = process.argv[3] ?? "http://localhost:3000";
   generatePDF(ebookId, baseUrl).catch((err) => {
-    console.error("❌ Erro ao gerar PDF:", err);
+    console.error("❌ Failed to generate PDF:", err);
     process.exit(1);
   });
 }

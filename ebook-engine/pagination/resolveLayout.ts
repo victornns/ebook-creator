@@ -34,8 +34,6 @@ const DEFAULT_MARGIN_MM = 20;
 // It is subtracted from contentHeightMm so blocks never overlap the footer.
 const FOOTER_HEIGHT_MM = 8;
 
-// Derives all page metrics from a theme. The resulting PageLayout is used by
-// both the React renderer (CSS sizes) and the JS paginator (pixel height budget).
 export function resolveLayout(theme: EbookTheme): PageLayout {
   const { width: pageWidthMm, height: pageHeightMm } = resolvePageSize(theme.pageSize);
 

@@ -7,14 +7,12 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-stone-50">
       <div className="max-w-2xl mx-auto px-6 py-24">
-        {/* Header */}
         <div className="mb-12">
           <span className="text-xs font-semibold tracking-widest uppercase text-stone-400">Ebook Creator</span>
           <h1 className="mt-4 text-4xl font-bold tracking-tight text-stone-800 leading-tight">Create e-books by code.</h1>
           <p className="mt-4 text-stone-400 leading-relaxed">Define content and theme in TypeScript, preview in the browser, export to PDF/EPUB.</p>
         </div>
 
-        {/* Ebook list */}
         <ul className="space-y-3">
           {ebooks.map(([id, entry]) => (
             <li

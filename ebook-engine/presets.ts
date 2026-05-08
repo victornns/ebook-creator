@@ -1,9 +1,5 @@
 import type { EbookTheme } from "./types/theme";
 
-// ---------------------------------------------------------------------------
-// Preset definitions
-// ---------------------------------------------------------------------------
-
 /** Clean, neutral, content-focused. Ideal for essays, reports, and editorial work. */
 export const minimalPreset: EbookTheme = {
   colors: {
@@ -97,10 +93,6 @@ export const documentationPreset: EbookTheme = {
   pageSize: "A4",
 };
 
-// ---------------------------------------------------------------------------
-// Preset map — convenient lookup by name
-// ---------------------------------------------------------------------------
-
 export const presets = {
   minimal: minimalPreset,
   corporate: corporatePreset,
@@ -109,10 +101,6 @@ export const presets = {
 } as const;
 
 export type PresetName = keyof typeof presets;
-
-// ---------------------------------------------------------------------------
-// extendPreset — apply a preset and override specific fields
-// ---------------------------------------------------------------------------
 
 type EbookThemeOverrides = Omit<Partial<EbookTheme>, "colors" | "fonts" | "spacing"> & {
   colors?: Partial<EbookTheme["colors"]>;
