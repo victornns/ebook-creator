@@ -5,7 +5,7 @@ import imageContent from "./assets/sample-image.jpg";
 export const componentsReferenceEbook: Ebook = {
   id: "components-reference",
   title: "Components Reference",
-  subtitle: "A complete visual reference of every content block available in the ebook engine",
+  subtitle: "A complete visual reference of all content blocks available in the engine",
   author: "Ebook Engine",
 
   cover: {
@@ -46,7 +46,6 @@ export const componentsReferenceEbook: Ebook = {
           type: "rich-paragraph",
           content: "Escape characters when you need a literal symbol: \\*not italic\\*, \\`not code\\`, \\[not a link\\]. The backslash prevents Markdown parsing.",
         },
-
         // ── Headings ──
         { type: "page-break" },
         { type: "heading", level: 1, content: "Heading Level 1" },
@@ -106,7 +105,6 @@ export const componentsReferenceEbook: Ebook = {
           type: "list",
           items: ["First item in the list", "Second item — a bit longer to show line wrapping behaviour inside the bullet", "Third item", "Fourth item with **bold** and *italic* — inline Markdown works inside list items", "Fifth item — last in the set"],
         },
-
         { type: "heading", level: 2, content: "Item List (Grid)" },
         {
           type: "rich-paragraph",
@@ -117,7 +115,6 @@ export const componentsReferenceEbook: Ebook = {
           label: "Key features",
           items: ["Two-column grid layout", "Accent dot per item", "Optional label above", "Best for short entries", "Handles odd counts gracefully", "Great for feature lists", "Works well for specs", "Clean visual rhythm"],
         },
-
         { type: "page-break" },
         { type: "heading", level: 2, content: "Numbered Steps" },
         {
@@ -128,11 +125,11 @@ export const componentsReferenceEbook: Ebook = {
           type: "steps",
           label: "How to add a new ebook",
           items: [
-            "Create a new folder under `ebooks/your-ebook-id/`.",
-            "Add `ebook.ts` exporting your `Ebook` object and `theme.ts` exporting your `EbookTheme`.",
-            "Register the entry in `ebooks/index.ts` inside `ebookRegistry`.",
-            "Open `/preview/your-ebook-id` in the browser to see the result.",
-            "Run `npm run export:pdf your-ebook-id` to export a PDF.",
+            "Create a new folder under 'ebooks/your-ebook-id/'.",
+            "Add 'ebook.ts' exporting your 'Ebook' object and 'theme.ts' exporting your 'EbookTheme'.",
+            "Register the entry in 'ebooks/index.ts' inside 'ebookRegistry'.",
+            "Open '/preview/your-ebook-id' in the browser to see the result.",
+            "Run 'npm run export:pdf your-ebook-id' to export a PDF.",
           ],
         },
       ],
@@ -144,7 +141,6 @@ export const componentsReferenceEbook: Ebook = {
       title: "Visual Content",
       blocks: [
         { type: "heading", level: 1, content: "Visual Content Blocks" },
-
         { type: "heading", level: 2, content: "Highlight" },
         {
           type: "rich-paragraph",
@@ -152,7 +148,6 @@ export const componentsReferenceEbook: Ebook = {
         },
         { type: "highlight", content: "A single, compelling sentence that summarises the most important idea on this page." },
         { type: "highlight", content: "Highlights work best with 10–30 words. Longer content loses the visual impact that makes this block effective." },
-
         { type: "heading", level: 2, content: "Quote" },
         {
           type: "rich-paragraph",
@@ -160,7 +155,7 @@ export const componentsReferenceEbook: Ebook = {
         },
         { type: "quote", content: "Any sufficiently advanced technology is indistinguishable from magic. — Arthur C. Clarke" },
         { type: "quote", content: "First, solve the problem. Then, write the code. — John Johnson" },
-
+        { type: "page-break" },
         { type: "heading", level: 2, content: "Image with Caption" },
         {
           type: "rich-paragraph",
@@ -176,7 +171,6 @@ export const componentsReferenceEbook: Ebook = {
       title: "Code & Table",
       blocks: [
         { type: "heading", level: 1, content: "Code & Table" },
-
         { type: "heading", level: 2, content: "Code Block" },
         {
           type: "rich-paragraph",
@@ -208,7 +202,6 @@ export const myEbook: Ebook = {
   ],
 };`,
         },
-
         { type: "page-break" },
         { type: "heading", level: 2, content: "Table" },
         {
@@ -246,7 +239,6 @@ export const myEbook: Ebook = {
       title: "Action Box & Utility",
       blocks: [
         { type: "heading", level: 1, content: "Action Box & Utility Blocks" },
-
         { type: "heading", level: 2, content: "Action Box" },
         {
           type: "rich-paragraph",
@@ -263,14 +255,12 @@ export const myEbook: Ebook = {
           label: "Share this",
           content: "If this reference helped you, share it with someone who is building content tools.",
         },
-
         { type: "page-break" },
         { type: "heading", level: 2, content: "Divider" },
         { type: "rich-paragraph", content: "The `divider` block renders a subtle horizontal rule. Use it to visually separate unrelated groups of blocks within the same section." },
         { type: "divider" },
         { type: "rich-paragraph", content: "Content below the divider continues in the same section but signals a thematic break to the reader." },
         { type: "divider" },
-
         { type: "heading", level: 2, content: "Page Break" },
         {
           type: "rich-paragraph",
