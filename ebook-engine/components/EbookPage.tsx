@@ -23,7 +23,6 @@ export default function EbookPage({ layout, sectionId, pageNumber, showPageNumbe
     flexShrink: 0,
     overflow: "hidden",
     backgroundColor: "var(--ebook-bg, #fff)",
-    boxShadow: "0 4px 24px rgba(0,0,0,0.18)",
     ...(backgroundNode ? {} : backgroundStyle),
   };
 

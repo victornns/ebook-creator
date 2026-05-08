@@ -18,6 +18,8 @@ export interface EbookTheme {
     text: string;
     accent: string;
     muted: string;
+    /** Page background color. Defaults to #fff. Maps to the --ebook-bg CSS variable. */
+    background?: string;
   };
   fonts: {
     heading: string;

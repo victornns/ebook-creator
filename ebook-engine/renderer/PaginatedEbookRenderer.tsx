@@ -263,6 +263,7 @@ export default function PaginatedEbookRenderer({ ebook, theme }: Props) {
     "--ebook-text": theme.colors.text,
     "--ebook-accent": theme.colors.accent,
     "--ebook-muted": theme.colors.muted,
+    "--ebook-bg": theme.colors.background ?? "#fff",
     "--ebook-font-heading": theme.fonts.heading,
     "--ebook-font-body": theme.fonts.body,
     "--ebook-font-mono": theme.fonts.mono ?? "monospace",
